@@ -1,0 +1,2389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>寻源网站整合平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #005BAC;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-catl {
+            font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .logo-divider {
+            color: #005BAC;
+            opacity: 0.5;
+            font-weight: 300;
+        }
+
+        .logo-text {
+            font-weight: 600;
+            font-size: 20px;
+        }
+
+        /* Language Switcher */
+        .lang-switcher {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: 2px solid #667eea;
+            background: transparent;
+            color: #667eea;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .lang-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .lang-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 60px 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Region Filter */
+        .region-filter {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            padding: 15px 20px;
+        }
+
+        .region-btn {
+            padding: 14px 32px;
+            border: 3px solid #005BAC;
+            background: rgba(255, 255, 255, 0.95);
+            color: #005BAC;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 91, 172, 0.2), 0 0 0 4px rgba(255, 255, 255, 0.3);
+        }
+
+        .region-btn:hover {
+            background: #005BAC;
+            color: white;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 91, 172, 0.4), 0 0 0 6px rgba(255, 255, 255, 0.4);
+        }
+
+        .region-btn.active {
+            background: linear-gradient(135deg, #005BAC 0%, #003d7a 100%);
+            color: white;
+            box-shadow: 0 6px 20px rgba(0, 91, 172, 0.5), 0 0 0 5px rgba(255, 255, 255, 0.5);
+            transform: scale(1.08);
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .source-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .source-card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .country-flag {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            background: #f0f0f0;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .country-flag svg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .card-country {
+            font-size: 14px;
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .card-link:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .card-link::after {
+            content: '→';
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .card-link:hover::after {
+            transform: translateX(3px);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        footer p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Features Section */
+        .features {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 28px;
+            color: white;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .feature-desc {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .lang-switcher {
+                justify-content: center;
+            }
+        }
+
+        /* Loading Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="fade-in">
+            <div class="logo">
+                <span class="logo-catl">CATL SRC</span>
+                <span class="logo-divider">|</span>
+                <span class="logo-text" data-lang="logo-text">B2B寻源平台</span>
+            </div>
+            <div class="lang-switcher">
+                <button class="lang-btn active" data-lang-code="zh">中文</button>
+                <button class="lang-btn" data-lang-code="en">English</button>
+                <button class="lang-btn" data-lang-code="hu">Magyar</button>
+                <button class="lang-btn" data-lang-code="de">Deutsch</button>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero fade-in">
+            <h1 data-lang="hero-title">一站式寻源网站信息整合平台</h1>
+            <p data-lang="hero-desc">汇聚全球优质供应商资源，帮助您快速找到合适的合作伙伴。支持多国语言，覆盖全球主要市场。</p>
+        </section>
+
+        <!-- Region Filter -->
+        <div class="region-filter fade-in">
+            <button class="region-btn active" data-region="all" data-lang="region-all">全部</button>
+            <button class="region-btn" data-region="china" data-lang="region-china">中国</button>
+            <button class="region-btn" data-region="europe" data-lang="region-europe">欧洲</button>
+            <button class="region-btn" data-region="uk" data-lang="region-uk">英国</button>
+        </div>
+
+        <!-- Source Websites Cards -->
+        <div class="cards-grid">
+            <!-- China Card - 1688 -->
+            <div class="source-card fade-in" data-region="china">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#de2910" d="M0 0h640v480H0z"/>
+                            <g fill="#ffde00">
+                                <path d="M128 48L146 0h-36l18 48zm0 384l18-48h-36l18 48zm-78-252l42-30h-52l10 30zm-10 90l42 30-10-30h-52z"/>
+                                <path d="M128 96l8.4 25.8h27.2l-22 16 8.4 25.8-22-16-22 16 8.4-25.8-22-16h27.2z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">1688.com</div>
+                        <div class="card-country" data-lang="country-cn">中国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-cn">中国最大的B2B批发采购平台，汇集海量工厂直供资源，是寻找中国供应商和产品的首选平台。</p>
+                <a href="https://www.1688.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- China Card - Alibaba -->
+            <div class="source-card fade-in" data-region="china">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#de2910" d="M0 0h640v480H0z"/>
+                            <g fill="#ffde00">
+                                <path d="M128 48L146 0h-36l18 48zm0 384l18-48h-36l18 48zm-78-252l42-30h-52l10 30zm-10 90l42 30-10-30h-52z"/>
+                                <path d="M128 96l8.4 25.8h27.2l-22 16 8.4 25.8-22-16-22 16 8.4-25.8-22-16h27.2z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Alibaba.com</div>
+                        <div class="card-country" data-lang="country-cn">中国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-cn-alibaba">全球最大的B2B跨境电商平台，连接全球买家与中国供应商，支持多语言和国际贸易服务。</p>
+                <a href="https://www.alibaba.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- China Card - Made-in-China -->
+            <div class="source-card fade-in" data-region="china">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#de2910" d="M0 0h640v480H0z"/>
+                            <g fill="#ffde00">
+                                <path d="M128 48L146 0h-36l18 48zm0 384l18-48h-36l18 48zm-78-252l42-30h-52l10 30zm-10 90l42 30-10-30h-52z"/>
+                                <path d="M128 96l8.4 25.8h27.2l-22 16 8.4 25.8-22-16-22 16 8.4-25.8-22-16h27.2z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Made-in-China</div>
+                        <div class="card-country" data-lang="country-cn">中国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-cn-mic">专注中国制造的B2B平台，汇集各行业优质中国制造商，提供产品展示和贸易对接服务。</p>
+                <a href="https://www.made-in-china.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- China Card - Baidu B2B -->
+            <div class="source-card fade-in" data-region="china">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#de2910" d="M0 0h640v480H0z"/>
+                            <g fill="#ffde00">
+                                <path d="M128 48L146 0h-36l18 48zm0 384l18-48h-36l18 48zm-78-252l42-30h-52l10 30zm-10 90l42 30-10-30h-52z"/>
+                                <path d="M128 96l8.4 25.8h27.2l-22 16 8.4 25.8-22-16-22 16 8.4-25.8-22-16h27.2z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">百度爱采购</div>
+                        <div class="card-country" data-lang="country-cn">中国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-cn-baidu">百度旗下的B2B采购平台，整合百度搜索流量，帮助企业快速找到优质供应商和产品。</p>
+                <a href="https://b2b.baidu.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- China Card - JD Industry -->
+            <div class="source-card fade-in" data-region="china">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#de2910" d="M0 0h640v480H0z"/>
+                            <g fill="#ffde00">
+                                <path d="M128 48L146 0h-36l18 48zm0 384l18-48h-36l18 48zm-78-252l42-30h-52l10 30zm-10 90l42 30-10-30h-52z"/>
+                                <path d="M128 96l8.4 25.8h27.2l-22 16 8.4 25.8-22-16-22 16 8.4-25.8-22-16h27.2z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">京东工业</div>
+                        <div class="card-country" data-lang="country-cn">中国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-cn-jd">京东旗下工业用品采购平台，专注工业品、MRO采购，提供一站式企业采购解决方案。</p>
+                <a href="https://ind.jd.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- China Card - HC360 -->
+            <div class="source-card fade-in" data-region="china">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#de2910" d="M0 0h640v480H0z"/>
+                            <g fill="#ffde00">
+                                <path d="M128 48L146 0h-36l18 48zm0 384l18-48h-36l18 48zm-78-252l42-30h-52l10 30zm-10 90l42 30-10-30h-52z"/>
+                                <path d="M128 96l8.4 25.8h27.2l-22 16 8.4 25.8-22-16-22 16 8.4-25.8-22-16h27.2z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">慧聪网</div>
+                        <div class="card-country" data-lang="country-cn">中国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-cn-hc">中国领先的B2B电子商务平台，专注行业垂直领域，提供商机信息和撮合交易服务。</p>
+                <a href="https://www.hc360.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Hungary Card -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <g fill-rule="evenodd">
+                                <path fill="#fff" d="M640 480H0V0h640z"/>
+                                <path fill="#388d00" d="M640 480H0V320h640z"/>
+                                <path fill="#d43516" d="M640 160H0V0h640z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Europages</div>
+                        <div class="card-country" data-lang="country-hu">匈牙利</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-hu">欧洲领先的B2B采购平台，汇集超过260万家欧洲供应商，支持多语言搜索和产品类别浏览。</p>
+                <a href="https://www.europages.co.uk/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Germany Card - Wer liefert was -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#ffce00" d="M0 320h640v160H0z"/>
+                            <path d="M0 0h640v160H0z"/>
+                            <path fill="#d00" d="M0 160h640v160H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Wer liefert was</div>
+                        <div class="card-country" data-lang="country-de">德国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-de-wlw">德国最大的B2B供应商搜索平台，拥有超过70万家德国企业信息，是寻找德国供应商的首选平台。</p>
+                <a href="https://www.wlw.de/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Germany Card - IndustryStock -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#ffce00" d="M0 320h640v160H0z"/>
+                            <path d="M0 0h640v160H0z"/>
+                            <path fill="#d00" d="M0 160h640v160H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">IndustryStock</div>
+                        <div class="card-country" data-lang="country-de">德国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-de-is">德国工业B2B平台，专注工业产品和制造商，提供详细的产品目录和企业信息。</p>
+                <a href="https://www.industrystock.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Germany Card - Gelbe Seiten -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#ffce00" d="M0 320h640v160H0z"/>
+                            <path d="M0 0h640v160H0z"/>
+                            <path fill="#d00" d="M0 160h640v160H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Gelbe Seiten</div>
+                        <div class="card-country" data-lang="country-de">德国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-de-gs">德国黄页网站，提供全面的企业目录和商业信息搜索服务。</p>
+                <a href="https://www.gelbeseiten.de/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Germany Card - Firmenwissen -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#ffce00" d="M0 320h640v160H0z"/>
+                            <path d="M0 0h640v160H0z"/>
+                            <path fill="#d00" d="M0 160h640v160H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Firmenwissen</div>
+                        <div class="card-country" data-lang="country-de">德国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-de-fw">德国企业信息查询平台，提供详细的公司资料和商业数据。</p>
+                <a href="https://www.firmenwissen.de/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Europe General - Kompass -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#003399" d="M0 0h640v480H0z"/>
+                            <circle cx="320" cy="240" r="160" fill="#ffcc00"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Kompass</div>
+                        <div class="card-country" data-lang="country-eu">欧洲通用</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-eu-kompass">全球知名的B2B企业目录平台，覆盖70+国家，汇集超过1100万家企业信息。</p>
+                <a href="https://www.kompass.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Europe General - DirectIndustry -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#003399" d="M0 0h640v480H0z"/>
+                            <circle cx="320" cy="240" r="160" fill="#ffcc00"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">DirectIndustry</div>
+                        <div class="card-country" data-lang="country-eu">欧洲通用</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-eu-di">专注工业领域的B2B平台，汇集全球工业产品制造商和供应商。</p>
+                <a href="https://www.directindustry.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- UK - ThomasNet -->
+            <div class="source-card fade-in" data-region="uk">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#012169" d="M0 0h640v480H0z"/>
+                            <path fill="#FFF" d="M75 0l244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0h75z"/>
+                            <path fill="#C8102E" d="M424 281l216 159v40L369 281h55zm-184 20l6 35L54 480H0l240-179zM640 0v3L391 191l2-44L590 0h50zM0 0l239 176h-60L0 42V0z"/>
+                            <path fill="#FFF" d="M241 0v480h160V0H241zM0 160v160h640V160H0z"/>
+                            <path fill="#C8102E" d="M0 193v96h640v-96H0zM273 0v480h96V0h-96z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">ThomasNet</div>
+                        <div class="card-country" data-lang="country-uk">英国/北美</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-uk-thomas">北美领先的工业B2B平台，汇集超过50万家供应商和工业产品信息。</p>
+                <a href="https://www.thomasnet.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- UK - Yell -->
+            <div class="source-card fade-in" data-region="uk">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#012169" d="M0 0h640v480H0z"/>
+                            <path fill="#FFF" d="M75 0l244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0h75z"/>
+                            <path fill="#C8102E" d="M424 281l216 159v40L369 281h55zm-184 20l6 35L54 480H0l240-179zM640 0v3L391 191l2-44L590 0h50zM0 0l239 176h-60L0 42V0z"/>
+                            <path fill="#FFF" d="M241 0v480h160V0H241zM0 160v160h640V160H0z"/>
+                            <path fill="#C8102E" d="M0 193v96h640v-96H0zM273 0v480h96V0h-96z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Yell</div>
+                        <div class="card-country" data-lang="country-uk">英国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-uk-yell">英国领先的在线商业目录，帮助企业发现和联系本地及全国供应商。</p>
+                <a href="https://www.yell.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- France - PagesJaunes -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#ED2939" d="M0 0h640v480H0z"/>
+                            <path fill="#fff" d="M0 0h426.7v480H0z"/>
+                            <path fill="#002395" d="M0 0h213.3v480H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">PagesJaunes</div>
+                        <div class="card-country" data-lang="country-fr">法国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-fr-pj">法国黄页网站，提供全面的企业目录和商业搜索服务。</p>
+                <a href="https://www.pagesjaunes.fr/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Italy - Pagine Gialle -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#009246" d="M0 0h213.3v480H0z"/>
+                            <path fill="#CE2B37" d="M426.7 0H640v480H426.7z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Pagine Gialle</div>
+                        <div class="card-country" data-lang="country-it">意大利</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-it-pg">意大利黄页网站，汇集意大利企业和商业信息。</p>
+                <a href="https://www.paginegialle.it/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Spain - Guia de Empresas -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#AA151B" d="M0 0h640v480H0z"/>
+                            <path fill="#F1BF00" d="M0 120h640v240H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Guia de Empresas</div>
+                        <div class="card-country" data-lang="country-es">西班牙</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-es-gde">西班牙企业指南平台，提供详细的企业信息和商业搜索服务。</p>
+                <a href="https://www.guiadempresas.es/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Sweden - Eniro -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#006AA7" d="M0 0h640v480H0z"/>
+                            <path fill="#FECC00" d="M0 192h640v96H0zM200 0h96v480h-96z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Eniro</div>
+                        <div class="card-country" data-lang="country-se">瑞典</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-se-eniro">瑞典领先的商业搜索平台，涵盖瑞典和挪威的企业信息。</p>
+                <a href="https://www.eniro.se/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Poland - Firmy -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#DC143C" d="M0 240h640v240H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Firmy.pl</div>
+                        <div class="card-country" data-lang="country-pl">波兰</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-pl-firmy">波兰企业目录平台，提供波兰本地企业的详细信息和搜索服务。</p>
+                <a href="https://www.firmy.pl/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Czech - Firmy -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#D7141A" d="M0 240h640v240H0z"/>
+                            <path fill="#11457E" d="M0 0l320 240L0 480V0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Firmy.cz</div>
+                        <div class="card-country" data-lang="country-cz">捷克</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-cz-firmy">捷克企业目录平台，提供捷克本地企业的详细信息和商业搜索。</p>
+                <a href="https://www.firmy.cz/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Hungary - Cegb2b -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <g fill-rule="evenodd">
+                                <path fill="#fff" d="M640 480H0V0h640z"/>
+                                <path fill="#388d00" d="M640 480H0V320h640z"/>
+                                <path fill="#d43516" d="M640 160H0V0h640z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Cegb2b.hu</div>
+                        <div class="card-country" data-lang="country-hu">匈牙利</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-hu-cegb2b">匈牙利B2B企业目录，汇集匈牙利本地企业和制造商信息。</p>
+                <a href="https://www.cegb2b.hu/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Hungary - FirmaKatalogus -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <g fill-rule="evenodd">
+                                <path fill="#fff" d="M640 480H0V0h640z"/>
+                                <path fill="#388d00" d="M640 480H0V320h640z"/>
+                                <path fill="#d43516" d="M640 160H0V0h640z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">FirmaKatalogus</div>
+                        <div class="card-country" data-lang="country-hu">匈牙利</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-hu-fk">匈牙利企业目录平台，提供全面的匈牙利企业信息和联系方式。</p>
+                <a href="https://www.firmakatalogus.hu/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Hungary - Export.hu -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <g fill-rule="evenodd">
+                                <path fill="#fff" d="M640 480H0V0h640z"/>
+                                <path fill="#388d00" d="M640 480H0V320h640z"/>
+                                <path fill="#d43516" d="M640 160H0V0h640z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Export.hu</div>
+                        <div class="card-country" data-lang="country-hu">匈牙利</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-hu-export">匈牙利工商会官方出口平台，工业/MRO询盘多。</p>
+                <a href="https://www.export.hu/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Hungary - Cylex.hu -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <g fill-rule="evenodd">
+                                <path fill="#fff" d="M640 480H0V0h640z"/>
+                                <path fill="#388d00" d="M640 480H0V320h640z"/>
+                                <path fill="#d43516" d="M640 160H0V0h640z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Cylex.hu</div>
+                        <div class="card-country" data-lang="country-hu">匈牙利</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-hu-cylex">本土工业黄页，五金/机械/电气/MRO集中。</p>
+                <a href="https://www.cylex.hu/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Hungary - Aranyoldalak.hu -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <g fill-rule="evenodd">
+                                <path fill="#fff" d="M640 480H0V0h640z"/>
+                                <path fill="#388d00" d="M640 480H0V320h640z"/>
+                                <path fill="#d43516" d="M640 160H0V0h640z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Aranyoldalak.hu</div>
+                        <div class="card-country" data-lang="country-hu">匈牙利</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-hu-arany">匈牙利老牌企业名录，制造/维修/MRO。</p>
+                <a href="https://aranyoldalak.hu/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Hungary - Startlap.hu -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <g fill-rule="evenodd">
+                                <path fill="#fff" d="M640 480H0V0h640z"/>
+                                <path fill="#388d00" d="M640 480H0V320h640z"/>
+                                <path fill="#d43516" d="M640 160H0V0h640z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Startlap.hu</div>
+                        <div class="card-country" data-lang="country-hu">匈牙利</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-hu-startlap">本土门户+行业目录，工业供应商多。</p>
+                <a href="https://www.startlap.hu/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Austria - WLW.at -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#C8102E" d="M0 160h640v160H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">WLW.at</div>
+                        <div class="card-country" data-lang="country-at">奥地利</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-at-wlw">奥地利工业平台，同德国WLW体系，MRO强。</p>
+                <a href="https://www.wlw.at/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Austria - Europages AT -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#C8102E" d="M0 160h640v160H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Europages AT</div>
+                        <div class="card-country" data-lang="country-at">奥地利</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-at-ep">奥地利工业采购常用平台。</p>
+                <a href="https://www.europages.at/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Austria - Kompass Austria -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#C8102E" d="M0 160h640v160H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Kompass Austria</div>
+                        <div class="card-country" data-lang="country-at">奥地利</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-at-kompass">工业MRO买家精准。</p>
+                <a href="https://www.kompass.com/at/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Austria - IndustryStock AT -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#C8102E" d="M0 160h640v160H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">IndustryStock AT</div>
+                        <div class="card-country" data-lang="country-at">奥地利</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-at-is">设备/零部件/MRO平台。</p>
+                <a href="https://www.industrystock.com/at/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Czech - Zlatestranky.cz -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#D7141A" d="M0 240h640v240H0z"/>
+                            <path fill="#11457E" d="M0 0l320 240L0 480V0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Zlatestranky.cz</div>
+                        <div class="card-country" data-lang="country-cz">捷克</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-cz-zlate">捷克最大工业黄页，MRO服务商多。</p>
+                <a href="https://www.zlatestranky.cz/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Czech - Europages CZ -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#D7141A" d="M0 240h640v240H0z"/>
+                            <path fill="#11457E" d="M0 0l320 240L0 480V0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Europages CZ</div>
+                        <div class="card-country" data-lang="country-cz">捷克</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-cz-ep">捷克语版，机械/电气/零部件。</p>
+                <a href="https://www.europages.cz/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Czech - Kompass Czech -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#D7141A" d="M0 240h640v240H0z"/>
+                            <path fill="#11457E" d="M0 0l320 240L0 480V0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Kompass Czech</div>
+                        <div class="card-country" data-lang="country-cz">捷克</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-cz-kompass">工业买家完善，MRO采购高频。</p>
+                <a href="https://www.kompass.com/cz/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Czech - IndustryStock CZ -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#D7141A" d="M0 240h640v240H0z"/>
+                            <path fill="#11457E" d="M0 0l320 240L0 480V0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">IndustryStock CZ</div>
+                        <div class="card-country" data-lang="country-cz">捷克</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-cz-is">自动化/机械/MRO平台。</p>
+                <a href="https://www.industrystock.com/cz/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Slovakia - Zlatestranky.sk -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#0B4EA2" d="M0 320h640v160H0z"/>
+                            <path fill="#EE1C25" d="M0 0l320 240L0 480V0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Zlatestranky.sk</div>
+                        <div class="card-country" data-lang="country-sk">斯洛伐克</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-sk-zlate">斯洛伐克工业黄页，五金/工具/MRO。</p>
+                <a href="https://www.zlatestranky.sk/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Slovakia - Europages SK -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#0B4EA2" d="M0 320h640v160H0z"/>
+                            <path fill="#EE1C25" d="M0 0l320 240L0 480V0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Europages SK</div>
+                        <div class="card-country" data-lang="country-sk">斯洛伐克</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-sk-ep">斯洛伐克语版，全品类工业MRO。</p>
+                <a href="https://www.europages.sk/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Slovakia - Kompass Slovakia -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#0B4EA2" d="M0 320h640v160H0z"/>
+                            <path fill="#EE1C25" d="M0 0l320 240L0 480V0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Kompass Slovakia</div>
+                        <div class="card-country" data-lang="country-sk">斯洛伐克</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-sk-kompass">工业买家精准，询盘稳定。</p>
+                <a href="https://www.kompass.com/sk/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Slovakia - DirectIndustry SK -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#0B4EA2" d="M0 320h640v160H0z"/>
+                            <path fill="#EE1C25" d="M0 0l320 240L0 480V0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">DirectIndustry SK</div>
+                        <div class="card-country" data-lang="country-sk">斯洛伐克</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-sk-di">高端设备/MRO平台。</p>
+                <a href="https://www.directindustry.com/sk/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Romania - Europages RO -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#002B7F" d="M0 0h213.3v480H0z"/>
+                            <path fill="#FCD116" d="M213.3 0h213.3v480H213.3z"/>
+                            <path fill="#CE1126" d="M426.7 0H640v480H426.7z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Europages RO</div>
+                        <div class="card-country" data-lang="country-ro">罗马尼亚</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-ro-ep">罗马尼亚首选工业B2B，MRO询盘多。</p>
+                <a href="https://www.europages.ro/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Romania - Kompass Romania -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#002B7F" d="M0 0h213.3v480H0z"/>
+                            <path fill="#FCD116" d="M213.3 0h213.3v480H213.3z"/>
+                            <path fill="#CE1126" d="M426.7 0H640v480H426.7z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Kompass Romania</div>
+                        <div class="card-country" data-lang="country-ro">罗马尼亚</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-ro-kompass">工业MRO买家集中。</p>
+                <a href="https://www.kompass.com/ro/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Romania - Cylex.ro -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#002B7F" d="M0 0h213.3v480H0z"/>
+                            <path fill="#FCD116" d="M213.3 0h213.3v480H213.3z"/>
+                            <path fill="#CE1126" d="M426.7 0H640v480H426.7z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Cylex.ro</div>
+                        <div class="card-country" data-lang="country-ro">罗马尼亚</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-ro-cylex">本土企业名录，制造/维修/MRO。</p>
+                <a href="https://www.cylex.ro/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Romania - IndustryStock RO -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#002B7F" d="M0 0h213.3v480H0z"/>
+                            <path fill="#FCD116" d="M213.3 0h213.3v480H213.3z"/>
+                            <path fill="#CE1126" d="M426.7 0H640v480H426.7z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">IndustryStock RO</div>
+                        <div class="card-country" data-lang="country-ro">罗马尼亚</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-ro-is">机械/自动化/MRO平台。</p>
+                <a href="https://www.industrystock.com/ro/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Slovenia - Europages SI -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#005CE6" d="M0 160h640v160H0z"/>
+                            <path fill="#FF0000" d="M0 320h640v160H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Europages SI</div>
+                        <div class="card-country" data-lang="country-si">斯洛文尼亚</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-si-ep">斯洛文尼亚工业采购常用平台。</p>
+                <a href="https://www.europages.si/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Slovenia - Kompass Slovenia -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#005CE6" d="M0 160h640v160H0z"/>
+                            <path fill="#FF0000" d="M0 320h640v160H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Kompass Slovenia</div>
+                        <div class="card-country" data-lang="country-si">斯洛文尼亚</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-si-kompass">工业买家精准，MRO稳定。</p>
+                <a href="https://www.kompass.com/si/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Slovenia - DirectIndustry SI -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#005CE6" d="M0 160h640v160H0z"/>
+                            <path fill="#FF0000" d="M0 320h640v160H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">DirectIndustry SI</div>
+                        <div class="card-country" data-lang="country-si">斯洛文尼亚</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-si-di">高端设备/MRO平台。</p>
+                <a href="https://www.directindustry.com/si/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Slovenia - Gospodarski vestnik -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#005CE6" d="M0 160h640v160H0z"/>
+                            <path fill="#FF0000" d="M0 320h640v160H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Gospodarski vestnik</div>
+                        <div class="card-country" data-lang="country-si">斯洛文尼亚</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-si-gv">本土工业门户，供应商多。</p>
+                <a href="https://www.gospodarski-vestnik.si/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- China - 震坤行 ZKH -->
+            <div class="source-card fade-in" data-region="china">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#de2910" d="M0 0h640v480H0z"/>
+                            <g fill="#ffde00">
+                                <path d="M128 48L146 0h-36l18 48zm0 384l18-48h-36l18 48zm-78-252l42-30h-52l10 30zm-10 90l42 30-10-30h-52z"/>
+                                <path d="M128 96l8.4 25.8h27.2l-22 16 8.4 25.8-22-16-22 16 8.4-25.8-22-16h27.2z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">震坤行 ZKH</div>
+                        <div class="card-country" data-lang="country-cn">中国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-cn-zkh">国内头部MRO一站式，劳保/工具/电气/耗材。</p>
+                <a href="https://www.zkh.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- China - 西域 EHSY -->
+            <div class="source-card fade-in" data-region="china">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#de2910" d="M0 0h640v480H0z"/>
+                            <g fill="#ffde00">
+                                <path d="M128 48L146 0h-36l18 48zm0 384l18-48h-36l18 48zm-78-252l42-30h-52l10 30zm-10 90l42 30-10-30h-52z"/>
+                                <path d="M128 96l8.4 25.8h27.2l-22 16 8.4 25.8-22-16-22 16 8.4-25.8-22-16h27.2z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">西域 EHSY</div>
+                        <div class="card-country" data-lang="country-cn">中国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-cn-ehsy">标准化工业品/MRO，工控/仪器/工具。</p>
+                <a href="https://www.ehsy.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- China - 固安捷 MRO -->
+            <div class="source-card fade-in" data-region="china">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#de2910" d="M0 0h640v480H0z"/>
+                            <g fill="#ffde00">
+                                <path d="M128 48L146 0h-36l18 48zm0 384l18-48h-36l18 48zm-78-252l42-30h-52l10 30zm-10 90l42 30-10-30h-52z"/>
+                                <path d="M128 96l8.4 25.8h27.2l-22 16 8.4 25.8-22-16-22 16 8.4-25.8-22-16h27.2z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">固安捷 MRO</div>
+                        <div class="card-country" data-lang="country-cn">中国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-cn-gaj">国际MRO巨头中国站。</p>
+                <a href="https://www.mymro.cn/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- China - 米思米 MISUMI -->
+            <div class="source-card fade-in" data-region="china">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#de2910" d="M0 0h640v480H0z"/>
+                            <g fill="#ffde00">
+                                <path d="M128 48L146 0h-36l18 48zm0 384l18-48h-36l18 48zm-78-252l42-30h-52l10 30zm-10 90l42 30-10-30h-52z"/>
+                                <path d="M128 96l8.4 25.8h27.2l-22 16 8.4 25.8-22-16-22 16 8.4-25.8-22-16h27.2z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">米思米 MISUMI</div>
+                        <div class="card-country" data-lang="country-cn">中国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-cn-misumi">自动化/标准件/MRO。</p>
+                <a href="https://www.misumi.com.cn/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- China - 工邦邦 -->
+            <div class="source-card fade-in" data-region="china">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#de2910" d="M0 0h640v480H0z"/>
+                            <g fill="#ffde00">
+                                <path d="M128 48L146 0h-36l18 48zm0 384l18-48h-36l18 48zm-78-252l42-30h-52l10 30zm-10 90l42 30-10-30h-52z"/>
+                                <path d="M128 96l8.4 25.8h27.2l-22 16 8.4 25.8-22-16-22 16 8.4-25.8-22-16h27.2z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">工邦邦</div>
+                        <div class="card-country" data-lang="country-cn">中国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-cn-gbb">工业耗材/MRO分销。</p>
+                <a href="https://www.gongbangbang.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- UK - Europages UK -->
+            <div class="source-card fade-in" data-region="uk">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#012169" d="M0 0h640v480H0z"/>
+                            <path fill="#FFF" d="M75 0l244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0h75z"/>
+                            <path fill="#C8102E" d="M424 281l216 159v40L369 281h55zm-184 20l6 35L54 480H0l240-179zM640 0v3L391 191l2-44L590 0h50zM0 0l239 176h-60L0 42V0z"/>
+                            <path fill="#FFF" d="M241 0v480h160V0H241zM0 160v160h640V160H0z"/>
+                            <path fill="#C8102E" d="M0 193v96h640v-96H0zM273 0v480h96V0h-96z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Europages UK</div>
+                        <div class="card-country" data-lang="country-uk">英国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-uk-ep">欧洲最大工业黄页，MRO非常集中。</p>
+                <a href="https://www.europages.co.uk/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- UK - Applegate -->
+            <div class="source-card fade-in" data-region="uk">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#012169" d="M0 0h640v480H0z"/>
+                            <path fill="#FFF" d="M75 0l244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0h75z"/>
+                            <path fill="#C8102E" d="M424 281l216 159v40L369 281h55zm-184 20l6 35L54 480H0l240-179zM640 0v3L391 191l2-44L590 0h50zM0 0l239 176h-60L0 42V0z"/>
+                            <path fill="#FFF" d="M241 0v480h160V0H241zM0 160v160h640V160H0z"/>
+                            <path fill="#C8102E" d="M0 193v96h640v-96H0zM273 0v480h96V0h-96z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Applegate</div>
+                        <div class="card-country" data-lang="country-uk">英国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-uk-applegate">英国工业B2B，14万供应商，大量MRO询盘。</p>
+                <a href="https://www.applegate.co.uk/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- UK - Esources -->
+            <div class="source-card fade-in" data-region="uk">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#012169" d="M0 0h640v480H0z"/>
+                            <path fill="#FFF" d="M75 0l244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0h75z"/>
+                            <path fill="#C8102E" d="M424 281l216 159v40L369 281h55zm-184 20l6 35L54 480H0l240-179zM640 0v3L391 191l2-44L590 0h50zM0 0l239 176h-60L0 42V0z"/>
+                            <path fill="#FFF" d="M241 0v480h160V0H241zM0 160v160h640V160H0z"/>
+                            <path fill="#C8102E" d="M0 193v96h640v-96H0zM273 0v480h96V0h-96z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Esources</div>
+                        <div class="card-country" data-lang="country-uk">英国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-uk-esources">英国最大批发/工业分销平台，MRO库存多。</p>
+                <a href="https://www.esources.co.uk/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- UK - The Wholesaler -->
+            <div class="source-card fade-in" data-region="uk">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#012169" d="M0 0h640v480H0z"/>
+                            <path fill="#FFF" d="M75 0l244 181L562 0h78v62L400 241l240 178v61h-80L320 301 81 480H0v-60l239-178L0 64V0h75z"/>
+                            <path fill="#C8102E" d="M424 281l216 159v40L369 281h55zm-184 20l6 35L54 480H0l240-179zM640 0v3L391 191l2-44L590 0h50zM0 0l239 176h-60L0 42V0z"/>
+                            <path fill="#FFF" d="M241 0v480h160V0H241zM0 160v160h640V160H0z"/>
+                            <path fill="#C8102E" d="M0 193v96h640v-96H0zM273 0v480h96V0h-96z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">The Wholesaler</div>
+                        <div class="card-country" data-lang="country-uk">英国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-uk-wholesaler">英国工业批发商名录，五金/工具/MRO。</p>
+                <a href="https://thewholesaler.co.uk/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Germany - Exportpages -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#ffce00" d="M0 320h640v160H0z"/>
+                            <path d="M0 0h640v160H0z"/>
+                            <path fill="#d00" d="M0 160h640v160H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Exportpages</div>
+                        <div class="card-country" data-lang="country-de">德国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-de-exportpages">德国老牌出口平台，电气/化工/设备MRO。</p>
+                <a href="https://www.exportpages.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- France - ManoMano Pro -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#ED2939" d="M0 0h640v480H0z"/>
+                            <path fill="#fff" d="M0 0h426.7v480H0z"/>
+                            <path fill="#002395" d="M0 0h213.3v480H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">ManoMano Pro</div>
+                        <div class="card-country" data-lang="country-fr">法国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-fr-manomano">专业版，工具/建材/电气/MRO。</p>
+                <a href="https://www.manomano.fr/pro/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- France - Kompass France -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#ED2939" d="M0 0h640v480H0z"/>
+                            <path fill="#fff" d="M0 0h426.7v480H0z"/>
+                            <path fill="#002395" d="M0 0h213.3v480H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Kompass France</div>
+                        <div class="card-country" data-lang="country-fr">法国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-fr-kompass">企业数据库+采购平台，工业MRO。</p>
+                <a href="https://www.kompass.com/fr/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- France - Archiexpo -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#ED2939" d="M0 0h640v480H0z"/>
+                            <path fill="#fff" d="M0 0h426.7v480H0z"/>
+                            <path fill="#002395" d="M0 0h213.3v480H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Archiexpo</div>
+                        <div class="card-country" data-lang="country-fr">法国</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-fr-archiexpo">工业建材/设备/MRO，工程类集中。</p>
+                <a href="https://www.archiexpo.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Spain - Solostocks -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#AA151B" d="M0 0h640v480H0z"/>
+                            <path fill="#F1BF00" d="M0 120h640v240H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Solostocks</div>
+                        <div class="card-country" data-lang="country-es">西班牙</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-es-solostocks">西班牙最大工业B2B，MRO/库存/二手设备。</p>
+                <a href="https://www.solostocks.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Spain - BigBuy -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#AA151B" d="M0 0h640v480H0z"/>
+                            <path fill="#F1BF00" d="M0 120h640v240H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">BigBuy</div>
+                        <div class="card-country" data-lang="country-es">西班牙</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-es-bigbuy">泛欧批发，工业耗材/MRO分销。</p>
+                <a href="https://www.bigbuy.eu/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Netherlands - Europages NL -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#21468B" d="M0 0h640v480H0z"/>
+                            <path fill="#fff" d="M0 0h640v320H0z"/>
+                            <path fill="#AE1C28" d="M0 0h640v160H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Europages NL</div>
+                        <div class="card-country" data-lang="country-nl">荷兰</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-nl-ep">荷兰工业采购常用平台。</p>
+                <a href="https://www.europages.nl/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Netherlands - Kompass Netherlands -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#21468B" d="M0 0h640v480H0z"/>
+                            <path fill="#fff" d="M0 0h640v320H0z"/>
+                            <path fill="#AE1C28" d="M0 0h640v160H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Kompass Netherlands</div>
+                        <div class="card-country" data-lang="country-nl">荷兰</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-nl-kompass">工业买家精准，MRO询盘稳定。</p>
+                <a href="https://www.kompass.com/nl/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Netherlands - TenderNed -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#21468B" d="M0 0h640v480H0z"/>
+                            <path fill="#fff" d="M0 0h640v320H0z"/>
+                            <path fill="#AE1C28" d="M0 0h640v160H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">TenderNed</div>
+                        <div class="card-country" data-lang="country-nl">荷兰</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-nl-tenderned">荷兰官方工业/公共采购平台，MRO招标。</p>
+                <a href="https://www.tenderned.nl/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Netherlands - Faxgids.nl -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#21468B" d="M0 0h640v480H0z"/>
+                            <path fill="#fff" d="M0 0h640v320H0z"/>
+                            <path fill="#AE1C28" d="M0 0h640v160H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Faxgids.nl</div>
+                        <div class="card-country" data-lang="country-nl">荷兰</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-nl-faxgids">荷兰工业企业名录，中间商/MRO多。</p>
+                <a href="https://faxgids.nl/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Poland - Aleo -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#DC143C" d="M0 240h640v240H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Aleo</div>
+                        <div class="card-country" data-lang="country-pl">波兰</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-pl-aleo">波兰最大B2B，400万企业，MRO集中。</p>
+                <a href="https://aleo.com/int/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Poland - Europages PL -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#DC143C" d="M0 240h640v240H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Europages PL</div>
+                        <div class="card-country" data-lang="country-pl">波兰</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-pl-ep">波兰语版，工业MRO首选。</p>
+                <a href="https://www.europages.pl/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Poland - Kompass Poland -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#DC143C" d="M0 240h640v240H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Kompass Poland</div>
+                        <div class="card-country" data-lang="country-pl">波兰</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-pl-kompass">工业买家数据完善，MRO采购。</p>
+                <a href="https://www.kompass.com/pl/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Poland - IndustryStock PL -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#fff" d="M0 0h640v480H0z"/>
+                            <path fill="#DC143C" d="M0 240h640v240H0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">IndustryStock PL</div>
+                        <div class="card-country" data-lang="country-pl">波兰</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-pl-is">机械/自动化/MRO，德国背景。</p>
+                <a href="https://www.industrystock.com/pl/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+
+            <!-- Europe General - Amazon Business EU -->
+            <div class="source-card fade-in" data-region="europe">
+                <div class="card-header">
+                    <div class="country-flag">
+                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="#003399" d="M0 0h640v480H0z"/>
+                            <circle cx="320" cy="240" r="160" fill="#ffcc00"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="card-title">Amazon Business EU</div>
+                        <div class="card-country" data-lang="country-eu">欧洲通用</div>
+                    </div>
+                </div>
+                <p class="card-description" data-lang="desc-eu-amazon">工业耗材/MRO分销。</p>
+                <a href="https://www.amazon.de/business/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <section class="features fade-in">
+            <h2 data-lang="features-title">平台优势</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🌍</div>
+                    <div class="feature-title" data-lang="feature-1-title">全球资源</div>
+                    <div class="feature-desc" data-lang="feature-1-desc">覆盖欧洲主要市场，汇集优质供应商资源</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌐</div>
+                    <div class="feature-title" data-lang="feature-2-title">多语言支持</div>
+                    <div class="feature-desc" data-lang="feature-2-desc">支持中文、英文、匈牙利语和德语切换</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title" data-lang="feature-3-title">快速寻源</div>
+                    <div class="feature-desc" data-lang="feature-3-desc">一键直达目标网站，提高寻源效率</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔄</div>
+                    <div class="feature-title" data-lang="feature-4-title">持续更新</div>
+                    <div class="feature-desc" data-lang="feature-4-desc">定期添加新的寻源渠道和平台</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="fade-in">
+            <p data-lang="footer">© 2026 寻源网站整合平台 | 助力企业全球化采购</p>
+        </footer>
+    </div>
+
+    <script>
+        // 多语言配置
+        const translations = {
+            zh: {
+                'logo-text': 'B2B寻源平台',
+                'hero-title': '一站式寻源网站信息整合平台',
+                'hero-desc': '汇聚全球优质供应商资源，帮助您快速找到合适的合作伙伴。支持多国语言，覆盖全球主要市场。',
+                'country-cn': '中国',
+                'country-uk': '英国/北美',
+                'country-fr': '法国',
+                'country-de': '德国',
+                'country-it': '意大利',
+                'country-es': '西班牙',
+                'country-se': '瑞典',
+                'country-pl': '波兰',
+                'country-cz': '捷克',
+                'country-hu': '匈牙利',
+                'country-eu': '欧洲通用',
+                'country-at': '奥地利',
+                'country-sk': '斯洛伐克',
+                'country-ro': '罗马尼亚',
+                'country-si': '斯洛文尼亚',
+                'country-nl': '荷兰',
+                'desc-cn': '中国最大的B2B批发采购平台，汇集海量工厂直供资源，是寻找中国供应商和产品的首选平台。',
+                'desc-cn-alibaba': '全球最大的B2B跨境电商平台，连接全球买家与中国供应商，支持多语言和国际贸易服务。',
+                'desc-cn-mic': '专注中国制造的B2B平台，汇集各行业优质中国制造商，提供产品展示和贸易对接服务。',
+                'desc-cn-baidu': '百度旗下的B2B采购平台，整合百度搜索流量，帮助企业快速找到优质供应商和产品。',
+                'desc-cn-jd': '京东旗下工业用品采购平台，专注工业品、MRO采购，提供一站式企业采购解决方案。',
+                'desc-cn-hc': '中国领先的B2B电子商务平台，专注行业垂直领域，提供商机信息和撮合交易服务。',
+                'desc-uk-thomas': '北美领先的工业B2B平台，汇集超过50万家供应商和工业产品信息。',
+                'desc-uk-yell': '英国领先的在线商业目录，帮助企业发现和联系本地及全国供应商。',
+                'desc-fr-pj': '法国黄页网站，提供全面的企业目录和商业搜索服务。',
+                'desc-de-wlw': '德国最大的B2B供应商搜索平台，拥有超过70万家德国企业信息，是寻找德国供应商的首选平台。',
+                'desc-de-is': '德国工业B2B平台，专注工业产品和制造商，提供详细的产品目录和企业信息。',
+                'desc-de-gs': '德国黄页网站，提供全面的企业目录和商业信息搜索服务。',
+                'desc-de-fw': '德国企业信息查询平台，提供详细的公司资料和商业数据。',
+                'desc-it-pg': '意大利黄页网站，汇集意大利企业和商业信息。',
+                'desc-es-gde': '西班牙企业指南平台，提供详细的企业信息和商业搜索服务。',
+                'desc-se-eniro': '瑞典领先的商业搜索平台，涵盖瑞典和挪威的企业信息。',
+                'desc-pl-firmy': '波兰企业目录平台，提供波兰本地企业的详细信息和搜索服务。',
+                'desc-cz-firmy': '捷克企业目录平台，提供捷克本地企业的详细信息和商业搜索。',
+                'desc-hu': '欧洲领先的B2B采购平台，汇集超过260万家欧洲供应商，支持多语言搜索和产品类别浏览。',
+                'desc-hu-cegb2b': '匈牙利B2B企业目录，汇集匈牙利本地企业和制造商信息。',
+                'desc-hu-fk': '匈牙利企业目录平台，提供全面的匈牙利企业信息和联系方式。',
+                'desc-eu-kompass': '全球知名的B2B企业目录平台，覆盖70+国家，汇集超过1100万家企业信息。',
+                'desc-eu-di': '专注工业领域的B2B平台，汇集全球工业产品制造商和供应商。',
+                'desc-hu-export': '匈牙利工商会官方出口平台，工业/MRO询盘多。',
+                'desc-hu-cylex': '本土工业黄页，五金/机械/电气/MRO集中。',
+                'desc-hu-arany': '匈牙利老牌企业名录，制造/维修/MRO。',
+                'desc-hu-startlap': '本土门户+行业目录，工业供应商多。',
+                'desc-at-wlw': '奥地利工业平台，同德国WLW体系，MRO强。',
+                'desc-at-ep': '奥地利工业采购常用平台。',
+                'desc-at-kompass': '工业MRO买家精准。',
+                'desc-at-is': '设备/零部件/MRO平台。',
+                'desc-cz-zlate': '捷克最大工业黄页，MRO服务商多。',
+                'desc-cz-ep': '捷克语版，机械/电气/零部件。',
+                'desc-cz-kompass': '工业买家完善，MRO采购高频。',
+                'desc-cz-is': '自动化/机械/MRO平台。',
+                'desc-sk-zlate': '斯洛伐克工业黄页，五金/工具/MRO。',
+                'desc-sk-ep': '斯洛伐克语版，全品类工业MRO。',
+                'desc-sk-kompass': '工业买家精准，询盘稳定。',
+                'desc-sk-di': '高端设备/MRO平台。',
+                'desc-ro-ep': '罗马尼亚首选工业B2B，MRO询盘多。',
+                'desc-ro-kompass': '工业MRO买家集中。',
+                'desc-ro-cylex': '本土企业名录，制造/维修/MRO。',
+                'desc-ro-is': '机械/自动化/MRO平台。',
+                'desc-si-ep': '斯洛文尼亚工业采购常用平台。',
+                'desc-si-kompass': '工业买家精准，MRO稳定。',
+                'desc-si-di': '高端设备/MRO平台。',
+                'desc-si-gv': '本土工业门户，供应商多。',
+                'desc-cn-zkh': '国内头部MRO一站式，劳保/工具/电气/耗材。',
+                'desc-cn-ehsy': '标准化工业品/MRO，工控/仪器/工具。',
+                'desc-cn-gaj': '国际MRO巨头中国站。',
+                'desc-cn-misumi': '自动化/标准件/MRO。',
+                'desc-cn-gbb': '工业耗材/MRO分销。',
+                'desc-uk-ep': '欧洲最大工业黄页，MRO非常集中。',
+                'desc-uk-applegate': '英国工业B2B，14万供应商，大量MRO询盘。',
+                'desc-uk-esources': '英国最大批发/工业分销平台，MRO库存多。',
+                'desc-uk-wholesaler': '英国工业批发商名录，五金/工具/MRO。',
+                'desc-de-exportpages': '德国老牌出口平台，电气/化工/设备MRO。',
+                'desc-fr-manomano': '专业版，工具/建材/电气/MRO。',
+                'desc-fr-kompass': '企业数据库+采购平台，工业MRO。',
+                'desc-fr-archiexpo': '工业建材/设备/MRO，工程类集中。',
+                'desc-es-solostocks': '西班牙最大工业B2B，MRO/库存/二手设备。',
+                'desc-es-bigbuy': '泛欧批发，工业耗材/MRO分销。',
+                'desc-nl-ep': '荷兰工业采购常用平台。',
+                'desc-nl-kompass': '工业买家精准，MRO询盘稳定。',
+                'desc-nl-tenderned': '荷兰官方工业/公共采购平台，MRO招标。',
+                'desc-nl-faxgids': '荷兰工业企业名录，中间商/MRO多。',
+                'desc-pl-aleo': '波兰最大B2B，400万企业，MRO集中。',
+                'desc-pl-ep': '波兰语版，工业MRO首选。',
+                'desc-pl-kompass': '工业买家数据完善，MRO采购。',
+                'desc-pl-is': '机械/自动化/MRO，德国背景。',
+                'desc-eu-amazon': '工业耗材/MRO分销。',
+                'region-all': '全部',
+                'region-china': '中国',
+                'region-uk': '英国',
+                'region-europe': '欧洲',
+                'region-austria': '奥地利',
+                'region-slovakia': '斯洛伐克',
+                'region-romania': '罗马尼亚',
+                'region-slovenia': '斯洛文尼亚',
+                'region-netherlands': '荷兰',
+                'visit-btn': '访问网站',
+                'features-title': '平台优势',
+                'feature-1-title': '全球资源',
+                'feature-1-desc': '覆盖欧洲主要市场，汇集优质供应商资源',
+                'feature-2-title': '多语言支持',
+                'feature-2-desc': '支持中文、英文、匈牙利语和德语切换',
+                'feature-3-title': '快速寻源',
+                'feature-3-desc': '一键直达目标网站，提高寻源效率',
+                'feature-4-title': '持续更新',
+                'feature-4-desc': '定期添加新的寻源渠道和平台',
+                'footer': '© 2026 寻源网站整合平台 | 助力企业全球化采购'
+            },
+            en: {
+                'logo-text': 'B2B Sourcing Platform',
+                'hero-title': 'One-Stop Sourcing Website Integration Platform',
+                'hero-desc': 'Gathering global quality supplier resources to help you quickly find suitable partners. Supporting multiple languages, covering major global markets.',
+                'country-cn': 'China',
+                'country-uk': 'UK/North America',
+                'country-fr': 'France',
+                'country-de': 'Germany',
+                'country-it': 'Italy',
+                'country-es': 'Spain',
+                'country-se': 'Sweden',
+                'country-pl': 'Poland',
+                'country-cz': 'Czech Republic',
+                'country-hu': 'Hungary',
+                'country-eu': 'Europe General',
+                'country-at': 'Austria',
+                'country-sk': 'Slovakia',
+                'country-ro': 'Romania',
+                'country-si': 'Slovenia',
+                'country-nl': 'Netherlands',
+                'desc-cn': 'China\'s largest B2B wholesale procurement platform, gathering massive factory direct supply resources, the first choice for finding Chinese suppliers and products.',
+                'desc-cn-alibaba': 'World\'s largest B2B cross-border e-commerce platform, connecting global buyers with Chinese suppliers, supporting multi-language and international trade services.',
+                'desc-cn-mic': 'B2B platform focusing on Made-in-China products, gathering quality Chinese manufacturers across various industries, providing product display and trade matching services.',
+                'desc-cn-baidu': 'B2B procurement platform under Baidu, integrating Baidu search traffic to help enterprises quickly find quality suppliers and products.',
+                'desc-cn-jd': 'JD\'s industrial supplies procurement platform, focusing on industrial products and MRO procurement, providing one-stop enterprise procurement solutions.',
+                'desc-cn-hc': 'China\'s leading B2B e-commerce platform, focusing on industry verticals, providing business information and transaction matching services.',
+                'desc-uk-thomas': 'North America\'s leading industrial B2B platform, gathering over 500,000 suppliers and industrial product information.',
+                'desc-uk-yell': 'UK\'s leading online business directory, helping enterprises discover and contact local and national suppliers.',
+                'desc-fr-pj': 'French yellow pages website, providing comprehensive business directory and commercial search services.',
+                'desc-de-wlw': 'Germany\'s largest B2B supplier search platform, with over 700,000 German company information, the first choice for finding German suppliers.',
+                'desc-de-is': 'German industrial B2B platform, focusing on industrial products and manufacturers, providing detailed product catalogs and company information.',
+                'desc-de-gs': 'German yellow pages website, providing comprehensive business directory and commercial information search services.',
+                'desc-de-fw': 'German company information query platform, providing detailed company profiles and business data.',
+                'desc-it-pg': 'Italian yellow pages website, gathering Italian enterprise and business information.',
+                'desc-es-gde': 'Spanish enterprise guide platform, providing detailed company information and commercial search services.',
+                'desc-se-eniro': 'Sweden\'s leading business search platform, covering enterprise information in Sweden and Norway.',
+                'desc-pl-firmy': 'Polish enterprise directory platform, providing detailed information and search services for local Polish businesses.',
+                'desc-cz-firmy': 'Czech enterprise directory platform, providing detailed information and commercial search for local Czech businesses.',
+                'desc-hu': 'Europe\'s leading B2B sourcing platform, gathering over 2.6 million European suppliers, supporting multi-language search and product category browsing.',
+                'desc-hu-cegb2b': 'Hungarian B2B enterprise directory, gathering local Hungarian enterprises and manufacturer information.',
+                'desc-hu-fk': 'Hungarian enterprise directory platform, providing comprehensive Hungarian enterprise information and contact details.',
+                'desc-at-wlw': 'Austrian industrial platform, same system as German WLW, strong in MRO.',
+                'desc-at-ep': 'Commonly used platform for industrial procurement in Austria.',
+                'desc-at-kompass': 'Precise targeting of industrial MRO buyers.',
+                'desc-at-is': 'Platform for equipment, components and MRO.',
+                'desc-sk-zlate': 'Slovak industrial yellow pages, covering hardware, tools and MRO.',
+                'desc-sk-ep': 'Slovak language version, full range of industrial MRO categories.',
+                'desc-sk-kompass': 'Precise industrial buyers, stable inquiries.',
+                'desc-sk-di': 'High-end equipment and MRO platform.',
+                'desc-ro-ep': 'Romania\'s preferred industrial B2B platform, many MRO inquiries.',
+                'desc-ro-kompass': 'Concentrated industrial MRO buyers.',
+                'desc-ro-cylex': 'Local business directory, manufacturing, maintenance and MRO.',
+                'desc-ro-is': 'Machinery, automation and MRO platform.',
+                'desc-si-ep': 'Commonly used platform for industrial procurement in Slovenia.',
+                'desc-si-kompass': 'Precise industrial buyers, stable MRO.',
+                'desc-si-di': 'High-end equipment and MRO platform.',
+                'desc-si-gv': 'Local industrial portal, many suppliers.',
+                'desc-nl-ep': 'Commonly used platform for industrial procurement in Netherlands.',
+                'desc-nl-kompass': 'Precise industrial buyers, stable MRO inquiries.',
+                'desc-nl-tenderned': 'Dutch official industrial/public procurement platform, MRO tenders.',
+                'desc-nl-faxgids': 'Dutch industrial business directory, many intermediaries and MRO.',
+                'desc-de-exportpages': 'German established export platform, electrical/chemical/equipment MRO.',
+                'desc-fr-manomano': 'Professional version, tools/building materials/electrical/MRO.',
+                'desc-fr-kompass': 'Enterprise database and procurement platform, industrial MRO.',
+                'desc-fr-archiexpo': 'Industrial building materials/equipment/MRO, engineering-focused.',
+                'desc-es-solostocks': 'Spain\'s largest industrial B2B, MRO/inventory/used equipment.',
+                'desc-es-bigbuy': 'Pan-European wholesale, industrial supplies/MRO distribution.',
+                'desc-pl-aleo': 'Poland\'s largest B2B, 4 million companies, MRO concentrated.',
+                'desc-pl-ep': 'Polish version, preferred for industrial MRO.',
+                'desc-pl-kompass': 'Complete industrial buyer data, MRO procurement.',
+                'desc-pl-is': 'Machinery/automation/MRO, German background.',
+                'desc-eu-amazon': 'Industrial supplies/MRO distribution.',
+                'desc-cn-zkh': 'Domestic leading MRO one-stop, safety/tools/electrical/consumables.',
+                'desc-cn-ehsy': 'Standardized industrial products/MRO, controls/instruments/tools.',
+                'desc-cn-gaj': 'International MRO giant China site.',
+                'desc-cn-misumi': 'Automation/standard parts/MRO.',
+                'desc-cn-gbb': 'Industrial consumables/MRO distribution.',
+                'desc-uk-ep': 'Europe\'s largest industrial yellow pages, very MRO concentrated.',
+                'desc-uk-applegate': 'UK industrial B2B, 140k suppliers, many MRO inquiries.',
+                'desc-uk-esources': 'UK\'s largest wholesale/industrial distribution platform, MRO inventory.',
+                'desc-uk-wholesaler': 'UK industrial wholesalers directory, hardware/tools/MRO.',
+                'desc-cz-zlate': 'Czech Republic\'s largest industrial yellow pages, many MRO service providers.',
+                'desc-cz-ep': 'Czech version, machinery/electrical/components.',
+                'desc-cz-kompass': 'Complete industrial buyers, high-frequency MRO procurement.',
+                'desc-cz-is': 'Automation/machinery/MRO platform.',
+                'desc-hu-export': 'Hungarian Chamber of Commerce official export platform, many industrial/MRO inquiries.',
+                'desc-hu-cylex': 'Local industrial yellow pages, hardware/machinery/electrical/MRO concentrated.',
+                'desc-hu-arany': 'Hungarian established business directory, manufacturing/maintenance/MRO.',
+                'desc-hu-startlap': 'Local portal and industry directory, many industrial suppliers.',
+                'desc-eu-kompass': 'World-renowned B2B enterprise directory platform, covering 70+ countries, gathering over 11 million enterprise information.',
+                'desc-eu-di': 'B2B platform focusing on industrial sectors, gathering global industrial product manufacturers and suppliers.',
+                'region-all': 'All',
+                'region-china': 'China',
+                'region-uk': 'UK',
+                'region-europe': 'Europe',
+                'region-austria': 'Austria',
+                'region-slovakia': 'Slovakia',
+                'region-romania': 'Romania',
+                'region-slovenia': 'Slovenia',
+                'region-netherlands': 'Netherlands',
+                'visit-btn': 'Visit Website',
+                'features-title': 'Platform Advantages',
+                'feature-1-title': 'Global Resources',
+                'feature-1-desc': 'Covering major European markets, gathering quality supplier resources',
+                'feature-2-title': 'Multi-language Support',
+                'feature-2-desc': 'Support Chinese, English, Hungarian and German switching',
+                'feature-3-title': 'Fast Sourcing',
+                'feature-3-desc': 'One-click access to target websites, improving sourcing efficiency',
+                'feature-4-title': 'Continuous Updates',
+                'feature-4-desc': 'Regularly adding new sourcing channels and platforms',
+                'footer': '© 2026 Sourcing Website Integration Platform | Empowering Global Procurement'
+            },
+            hu: {
+                'logo-text': 'B2B Beszerzési Platform',
+                'hero-title': 'Minden egyben beszerzési weboldal integrációs platform',
+                'hero-desc': 'Globális minőségi beszállítói források gyűjtése, hogy gyorsan megtalálja a megfelelő partnereket. Több nyelv támogatása, a főbb globális piacok lefedése.',
+                'country-cn': 'Kína',
+                'country-uk': 'Egyesült Királyság/Észak-Amerika',
+                'country-fr': 'Franciaország',
+                'country-de': 'Németország',
+                'country-it': 'Olaszország',
+                'country-es': 'Spanyolország',
+                'country-se': 'Svédország',
+                'country-pl': 'Lengyelország',
+                'country-cz': 'Csehország',
+                'country-hu': 'Magyarország',
+                'country-eu': 'Európa Általános',
+                'country-at': 'Ausztria',
+                'country-sk': 'Szlovákia',
+                'country-ro': 'Románia',
+                'country-si': 'Szlovénia',
+                'country-nl': 'Hollandia',
+                'desc-cn': 'Kína legnagyobb B2B nagykereskedelmi beszerzési platformja, hatalmas gyári közvetlen ellátási forrásokat gyűjtve, az első választás kínai beszállítók és termékek kereséséhez.',
+                'desc-cn-alibaba': 'A világ legnagyobb B2B határokon átnyúló e-kereskedelmi platformja, összekapcsolva a globális vevőket kínai beszállítókkal, többnyelvű és nemzetközi kereskedelmi szolgáltatások támogatásával.',
+                'desc-cn-mic': 'Kínai gyártmányokra összpontosító B2B platform, minőségi kínai gyártókat gyűjtve különböző iparágakból, termékbemutatást és kereskedelmi illesztési szolgáltatásokat nyújtva.',
+                'desc-cn-baidu': 'A Baidu B2B beszerzési platformja, integrálva a Baidu keresési forgalmat, hogy segítse a vállalatokat a minőségi beszállítók és termékek gyors megtalálásában.',
+                'desc-cn-jd': 'A JD ipari ellátási beszerzési platformja, ipari termékekre és MRO beszerzésre összpontosítva, teljes körű vállalati beszerzési megoldásokat nyújtva.',
+                'desc-cn-hc': 'Kína vezető B2B e-kereskedelmi platformja, iparági függőlegesekre összpontosítva, üzleti információkat és tranzakciós illesztési szolgáltatásokat nyújtva.',
+                'desc-uk-thomas': 'Észak-Amerika vezető ipari B2B platformja, több mint 500 000 beszállítót és ipari termék információt gyűjtve.',
+                'desc-uk-yell': 'Az Egyesült Királyság vezető online üzleti könyvtára, segítve a vállalatokat a helyi és országos beszállítók felfedezésében és kapcsolatfelvételében.',
+                'desc-fr-pj': 'Franciaország sárga oldalak weboldala, átfogó üzleti könyvtárat és kereskedelmi keresési szolgáltatásokat nyújtva.',
+                'desc-de-wlw': 'Németország legnagyobb B2B beszállítói keresési platformja, több mint 700 000 német vállalati információval, a német beszállítók keresésének első számú választása.',
+                'desc-de-is': 'Német ipari B2B platform, ipari termékekre és gyártókra összpontosítva, részletes termékkatalógusokat és vállalati információkat nyújtva.',
+                'desc-de-gs': 'Németország sárga oldalak weboldala, átfogó üzleti könyvtárat és kereskedelmi információ keresési szolgáltatásokat nyújtva.',
+                'desc-de-fw': 'Német vállalati információ lekérdező platform, részletes vállalati profilokat és üzleti adatokat nyújtva.',
+                'desc-it-pg': 'Olaszország sárga oldalak weboldala, olasz vállalati és üzleti információkat gyűjtve.',
+                'desc-es-gde': 'Spanyol vállalati útmutató platform, részletes vállalati információkat és kereskedelmi keresési szolgáltatásokat nyújtva.',
+                'desc-se-eniro': 'Svédország vezető üzleti keresési platformja, Svédország és Norvégia vállalati információit lefedve.',
+                'desc-pl-firmy': 'Lengyel vállalati könyvtár platform, részletes információkat és keresési szolgáltatásokat nyújtva a helyi lengyel vállalkozások számára.',
+                'desc-cz-firmy': 'Cseh vállalati könyvtár platform, részletes információkat és kereskedelmi keresést nyújtva a helyi cseh vállalkozások számára.',
+                'desc-hu': 'Európa vezető B2B beszerzési platformja, több mint 2,6 millió európai beszállítót gyűjtve, többnyelvű keresés és termékkategória böngészés támogatásával.',
+                'desc-hu-cegb2b': 'Magyar B2B vállalati könyvtár, helyi magyar vállalatokat és gyártói információkat gyűjtve.',
+                'desc-hu-fk': 'Magyar vállalati könyvtár platform, átfogó magyar vállalati információkat és elérhetőségeket nyújtva.',
+                'desc-at-wlw': 'Osztrák ipari platform, ugyanaz a rendszer, mint a német WLW, erős MRO.',
+                'desc-at-ep': 'Ausztriában gyakran használt ipari beszerzési platform.',
+                'desc-at-kompass': 'Pontos ipari MRO vevők megcélzása.',
+                'desc-at-is': 'Berendezések, alkatrészek és MRO platform.',
+                'desc-sk-zlate': 'Szlovák ipari sárga oldalak, vasárú, szerszámok és MRO.',
+                'desc-sk-ep': 'Szlovák nyelvű verzió, teljes ipari MRO kategóriák.',
+                'desc-sk-kompass': 'Pontos ipari vevők, stabil érdeklődések.',
+                'desc-sk-di': 'High-end berendezések és MRO platform.',
+                'desc-ro-ep': 'Románia első számú ipari B2B platformja, sok MRO érdeklődés.',
+                'desc-ro-kompass': 'Koncentrált ipari MRO vevők.',
+                'desc-ro-cylex': 'Helyi üzleti könyvtár, gyártás, karbantartás és MRO.',
+                'desc-ro-is': 'Gépek, automatizálás és MRO platform.',
+                'desc-si-ep': 'Szlovéniában gyakran használt ipari beszerzési platform.',
+                'desc-si-kompass': 'Pontos ipari vevők, stabil MRO.',
+                'desc-si-di': 'High-end berendezések és MRO platform.',
+                'desc-si-gv': 'Helyi ipari portál, sok beszállító.',
+                'desc-nl-ep': 'Hollandiában gyakran használt ipari beszerzési platform.',
+                'desc-nl-kompass': 'Pontos ipari vevők, stabil MRO érdeklődések.',
+                'desc-nl-tenderned': 'Holland hivatalos ipari/közbeszerzési platform, MRO pályázatok.',
+                'desc-nl-faxgids': 'Holland ipari üzleti könyvtár, sok közvetítő és MRO.',
+                'desc-de-exportpages': 'Német kiviteli platform, villamos/vegyipari/berendezési MRO.',
+                'desc-fr-manomano': 'Szakmai verzió, szerszámok/építőanyagok/villamos/MRO.',
+                'desc-fr-kompass': 'Vállalati adatbázis és beszerzési platform, ipari MRO.',
+                'desc-fr-archiexpo': 'Ipari építőanyagok/berendezések/MRO, mérnöki fókusz.',
+                'desc-es-solostocks': 'Spanyolország legnagyobb ipari B2B, MRO/készlet/használt berendezés.',
+                'desc-es-bigbuy': 'Egész európai nagykereskedelem, ipari fogyócikkek/MRO forgalmazás.',
+                'desc-pl-aleo': 'Lengyelország legnagyobb B2B, 4 millió vállalat, MRO koncentrált.',
+                'desc-pl-ep': 'Lengyel nyelvű verzió, ipari MRO előnyben részesítve.',
+                'desc-pl-kompass': 'Teljes ipari vevői adatok, MRO beszerzés.',
+                'desc-pl-is': 'Gépek/automatizálás/MRO, német háttér.',
+                'desc-eu-amazon': 'Ipari fogyócikkek/MRO forgalmazás.',
+                'desc-cn-zkh': 'Belföldi vezető MRO egyablakos, biztonsági/szerszámok/villamos/fogyócikkek.',
+                'desc-cn-ehsy': 'Standardizált ipari termékek/MRO, vezérlők/műszerek/szerszámok.',
+                'desc-cn-gaj': 'Nemzetközi MRO óriás kínai oldala.',
+                'desc-cn-misumi': 'Automatizálás/standard alkatrészek/MRO.',
+                'desc-cn-gbb': 'Ipari fogyócikkek/MRO forgalmazás.',
+                'desc-uk-ep': 'Európa legnagyobb ipari sárga oldala, nagyon MRO koncentrált.',
+                'desc-uk-applegate': 'Brit ipari B2B, 140k beszállító, sok MRO érdeklődés.',
+                'desc-uk-esources': 'Egyesült Királyság legnagyobb nagykereskedelmi/ipari forgalmazási platformja, MRO készlet.',
+                'desc-uk-wholesaler': 'Brit ipari nagykereskedői könyvtár, vasárú/szerszámok/MRO.',
+                'desc-cz-zlate': 'Csehország legnagyobb ipari sárga oldala, sok MRO szolgáltató.',
+                'desc-cz-ep': 'Cseh nyelvű verzió, gépek/villamos/alkatrészek.',
+                'desc-cz-kompass': 'Teljes ipari vevők, magas frekvenciájú MRO beszerzés.',
+                'desc-cz-is': 'Automatizálás/gépek/MRO platform.',
+                'desc-hu-export': 'Magyar Kereskedelmi Kamara hivatalos export platformja, sok ipari/MRO érdeklődés.',
+                'desc-hu-cylex': 'Helyi ipari sárga oldalak, vasárú/gépek/villamos/MRO koncentrált.',
+                'desc-hu-arany': 'Magyar megalapozott üzleti könyvtár, gyártás/karbantartás/MRO.',
+                'desc-hu-startlap': 'Helyi portál és iparági könyvtár, sok ipari beszállító.',
+                'desc-eu-kompass': 'Világszerte ismert B2B vállalati könyvtár platform, 70+ országot lefedve, több mint 11 millió vállalati információt gyűjtve.',
+                'desc-eu-di': 'Ipari szektorokra összpontosító B2B platform, globális ipari termékgyártókat és beszállítókat gyűjtve.',
+                'region-all': 'Mind',
+                'region-china': 'Kína',
+                'region-uk': 'Egyesült Királyság',
+                'region-europe': 'Európa',
+                'region-austria': 'Ausztria',
+                'region-slovakia': 'Szlovákia',
+                'region-romania': 'Románia',
+                'region-slovenia': 'Szlovénia',
+                'region-netherlands': 'Hollandia',
+                'visit-btn': 'Weboldal megtekintése',
+                'features-title': 'Platform előnyök',
+                'feature-1-title': 'Globális források',
+                'feature-1-desc': 'A főbb európai piacok lefedése, minőségi beszállítói források gyűjtése',
+                'feature-2-title': 'Többnyelvű támogatás',
+                'feature-2-desc': 'Kínai, angol, magyar és német nyelvváltás támogatása',
+                'feature-3-title': 'Gyors beszerzés',
+                'feature-3-desc': 'Egy kattintás a célweboldalakhoz, javítva a beszerzési hatékonyságot',
+                'feature-4-title': 'Folyamatos frissítések',
+                'feature-4-desc': 'Rendszeresen új beszerzési csatornák és platformok hozzáadása',
+                'footer': '© 2026 Beszerzési weboldal integrációs platform | Támogatás a globális beszerzésben'
+            },
+            de: {
+                'logo-text': 'B2B Beschaffungsplattform',
+                'hero-title': 'All-in-One Beschaffungswebsite-Integrationsplattform',
+                'hero-desc': 'Sammlung globaler Qualitätslieferantenressourcen, um Ihnen zu helfen, schnell geeignete Partner zu finden. Unterstützung mehrerer Sprachen, Abdeckung der wichtigsten globalen Märkte.',
+                'country-cn': 'China',
+                'country-uk': 'Vereinigtes Königreich/Nordamerika',
+                'country-fr': 'Frankreich',
+                'country-de': 'Deutschland',
+                'country-it': 'Italien',
+                'country-es': 'Spanien',
+                'country-se': 'Schweden',
+                'country-pl': 'Polen',
+                'country-cz': 'Tschechische Republik',
+                'country-hu': 'Ungarn',
+                'country-eu': 'Europa Allgemein',
+                'country-at': 'Österreich',
+                'country-sk': 'Slowakei',
+                'country-ro': 'Rumänien',
+                'country-si': 'Slowenien',
+                'country-nl': 'Niederlande',
+                'desc-cn': 'Chinas größte B2B-Großhandelsbeschaffungsplattform, die riesige fabrikdirekte Versorgungsressourcen sammelt, die erste Wahl für die Suche nach chinesischen Lieferanten und Produkten.',
+                'desc-cn-alibaba': 'Weltweit größte B2B-Grenzüberschreitende E-Commerce-Plattform, die globale Käufer mit chinesischen Lieferanten verbindet, Unterstützung mehrsprachiger und internationaler Handelsdienstleistungen.',
+                'desc-cn-mic': 'B2B-Plattform mit Fokus auf Made-in-China-Produkte, die qualitativ hochwertige chinesische Hersteller aus verschiedenen Branchen sammelt, Produktpräsentation und Handelsabstimmungsdienste bietet.',
+                'desc-cn-baidu': 'B2B-Beschaffungsplattform unter Baidu, die Baidu-Suchverkehr integriert, um Unternehmen bei der schnellen Suche nach qualitativ hochwertigen Lieferanten und Produkten zu unterstützen.',
+                'desc-cn-jd': 'JDs Plattform für Industriebedarfsbeschaffung, mit Fokus auf Industrieprodukte und MRO-Beschaffung, Bereitstellung von Komplettlösungen für Unternehmensbeschaffung.',
+                'desc-cn-hc': 'Chinas führende B2B-E-Commerce-Plattform, mit Fokus auf Branchenvertikalen, Bereitstellung von Geschäftsinformationen und Transaktionsabstimmungsdiensten.',
+                'desc-uk-thomas': 'Nordamerikas führende industrielle B2B-Plattform, die über 500.000 Lieferanten und Industrieproduktinformationen sammelt.',
+                'desc-uk-yell': 'Das führende Online-Branchenverzeichnis des Vereinigten Königreichs, das Unternehmen bei der Entdeckung und Kontaktaufnahme mit lokalen und nationalen Lieferanten unterstützt.',
+                'desc-fr-pj': 'Französische Gelbe Seiten-Website, die umfassende Branchenverzeichnisse und kommerzielle Suchdienste bietet.',
+                'desc-de-wlw': 'Deutschlands größte B2B-Lieferantensuchplattform, mit über 700.000 deutschen Unternehmensinformationen, die erste Wahl für die Suche nach deutschen Lieferanten.',
+                'desc-de-is': 'Deutsche industrielle B2B-Plattform, mit Fokus auf Industrieprodukte und Hersteller, Bereitstellung detaillierter Produktkataloge und Unternehmensinformationen.',
+                'desc-de-gs': 'Deutsche Gelbe Seiten-Website, die umfassende Branchenverzeichnisse und kommerzielle Informationssuchdienste bietet.',
+                'desc-de-fw': 'Deutsche Unternehmensinformationsabfrageplattform, die detaillierte Unternehmensprofile und Geschäftsdaten bereitstellt.',
+                'desc-it-pg': 'Italienische Gelbe Seiten-Website, die italienische Unternehmens- und Geschäftsinformationen sammelt.',
+                'desc-es-gde': 'Spanische Unternehmensführer-Plattform, die detaillierte Unternehmensinformationen und kommerzielle Suchdienste bietet.',
+                'desc-se-eniro': 'Schwedens führende Geschäftssuchplattform, die Unternehmensinformationen in Schweden und Norwegen abdeckt.',
+                'desc-pl-firmy': 'Polnische Unternehmensverzeichnis-Plattform, die detaillierte Informationen und Suchdienste für lokale polnische Unternehmen bietet.',
+                'desc-cz-firmy': 'Tschechische Unternehmensverzeichnis-Plattform, die detaillierte Informationen und kommerzielle Suche für lokale tschechische Unternehmen bietet.',
+                'desc-hu': 'Europas führende B2B-Beschaffungsplattform, die über 2,6 Millionen europäische Lieferanten sammelt, Unterstützung mehrsprachiger Suche und Produktkategorie-Durchsuchen.',
+                'desc-hu-cegb2b': 'Ungarisches B2B-Unternehmensverzeichnis, das lokale ungarische Unternehmen und Herstellerinformationen sammelt.',
+                'desc-hu-fk': 'Ungarische Unternehmensverzeichnis-Plattform, die umfassende ungarische Unternehmensinformationen und Kontaktdaten bietet.',
+                'desc-at-wlw': 'Österreichische Industrieplattform, dasselbe System wie deutsches WLW, stark in MRO.',
+                'desc-at-ep': 'Häufig verwendete Plattform für industrielle Beschaffung in Österreich.',
+                'desc-at-kompass': 'Präzises Targeting industrieller MRO-Käufer.',
+                'desc-at-is': 'Plattform für Ausrüstung, Komponenten und MRO.',
+                'desc-sk-zlate': 'Slowakische industrielle Gelbe Seiten, abdeckend Hardware, Werkzeuge und MRO.',
+                'desc-sk-ep': 'Slowakische Sprachversion, volle Palette industrieller MRO-Kategorien.',
+                'desc-sk-kompass': 'Präzise industrielle Käufer, stabile Anfragen.',
+                'desc-sk-di': 'High-End-Ausrüstungs- und MRO-Plattform.',
+                'desc-ro-ep': 'Rumäniens bevorzugte industrielle B2B-Plattform, viele MRO-Anfragen.',
+                'desc-ro-kompass': 'Konzentrierte industrielle MRO-Käufer.',
+                'desc-ro-cylex': 'Lokales Geschäftsverzeichnis, Fertigung, Wartung und MRO.',
+                'desc-ro-is': 'Maschinen, Automatisierung und MRO-Plattform.',
+                'desc-si-ep': 'Häufig verwendete Plattform für industrielle Beschaffung in Slowenien.',
+                'desc-si-kompass': 'Präzise industrielle Käufer, stabiles MRO.',
+                'desc-si-di': 'High-End-Ausrüstungs- und MRO-Plattform.',
+                'desc-si-gv': 'Lokales Industrieportal, viele Lieferanten.',
+                'desc-nl-ep': 'Häufig verwendete Plattform für industrielle Beschaffung in den Niederlanden.',
+                'desc-nl-kompass': 'Präzise industrielle Käufer, stabile MRO-Anfragen.',
+                'desc-nl-tenderned': 'Niederländische offizielle industrielle/öffentliche Beschaffungsplattform, MRO-Ausschreibungen.',
+                'desc-nl-faxgids': 'Niederländisches industrielles Geschäftsverzeichnis, viele Vermittler und MRO.',
+                'desc-de-exportpages': 'Deutsche etablierte Exportplattform, elektrisch/chemisch/Ausrüstung MRO.',
+                'desc-fr-manomano': 'Professionelle Version, Werkzeuge/Baumaterialien/elektrisch/MRO.',
+                'desc-fr-kompass': 'Unternehmensdatenbank und Beschaffungsplattform, industrielles MRO.',
+                'desc-fr-archiexpo': 'Industrielle Baumaterialien/Ausrüstung/MRO, ingenieurorientiert.',
+                'desc-es-solostocks': 'Spaniens größte industrielle B2B, MRO/Lagerung/gebrauchte Ausrüstung.',
+                'desc-es-bigbuy': 'Paneuropäischer Großhandel, Industriebedarfsartikel/MRO-Vertrieb.',
+                'desc-pl-aleo': 'Polens größte B2B, 4 Millionen Unternehmen, MRO konzentriert.',
+                'desc-pl-ep': 'Polnische Version, bevorzugt für industrielles MRO.',
+                'desc-pl-kompass': 'Vollständige industrielle Käuferdaten, MRO-Beschaffung.',
+                'desc-pl-is': 'Maschinen/Automatisierung/MRO, deutscher Hintergrund.',
+                'desc-eu-amazon': 'Industriebedarfsartikel/MRO-Vertrieb.',
+                'desc-cn-zkh': 'Inländische führende MRO-Alles-aus-einer-Hand, Sicherheit/Werkzeuge/elektrisch/Verbrauchsmaterialien.',
+                'desc-cn-ehsy': 'Standardisierte Industrieprodukte/MRO, Steuerungen/Instrumente/Werkzeuge.',
+                'desc-cn-gaj': 'Internationale MRO-Riesen China-Website.',
+                'desc-cn-misumi': 'Automatisierung/Standardteile/MRO.',
+                'desc-cn-gbb': 'Industrielle Verbrauchsmaterialien/MRO-Vertrieb.',
+                'desc-uk-ep': 'Europas größte industrielle Gelbe Seiten, sehr MRO-konzentriert.',
+                'desc-uk-applegate': 'Britische industrielle B2B, 140k Lieferanten, viele MRO-Anfragen.',
+                'desc-uk-esources': 'Vereinigtes Königreichs größte Großhandels-/Industrie-Vertriebsplattform, MRO-Lagerbestand.',
+                'desc-uk-wholesaler': 'Britisches industrielles Großhändler-Verzeichnis, Eisenwaren/Werkzeuge/MRO.',
+                'desc-cz-zlate': 'Tschechiens größte industrielle Gelbe Seiten, viele MRO-Dienstleister.',
+                'desc-cz-ep': 'Tschechische Version, Maschinen/elektrisch/Komponenten.',
+                'desc-cz-kompass': 'Vollständige industrielle Käufer, hochfrequente MRO-Beschaffung.',
+                'desc-cz-is': 'Automatisierung/Maschinen/MRO-Plattform.',
+                'desc-hu-export': 'Ungarische Handelskammer offizielle Exportplattform, viele industrielle/MRO-Anfragen.',
+                'desc-hu-cylex': 'Lokale industrielle Gelbe Seiten, Eisenwaren/Maschinen/elektrisch/MRO konzentriert.',
+                'desc-hu-arany': 'Ungarisches etabliertes Unternehmensverzeichnis, Fertigung/Wartung/MRO.',
+                'desc-hu-startlap': 'Lokales Portal und Branchenverzeichnis, viele industrielle Lieferanten.',
+                'desc-eu-kompass': 'Weltweit bekannte B2B-Unternehmensverzeichnis-Plattform, die 70+ Länder abdeckt, über 11 Millionen Unternehmensinformationen sammelt.',
+                'desc-eu-di': 'B2B-Plattform mit Fokus auf Industriesektoren, die globale Industrieprodukthersteller und Lieferanten sammelt.',
+                'region-all': 'Alle',
+                'region-china': 'China',
+                'region-uk': 'Vereinigtes Königreich',
+                'region-europe': 'Europa',
+                'region-austria': 'Österreich',
+                'region-slovakia': 'Slowakei',
+                'region-romania': 'Rumänien',
+                'region-slovenia': 'Slowenien',
+                'region-netherlands': 'Niederlande',
+                'visit-btn': 'Website besuchen',
+                'features-title': 'Plattformvorteile',
+                'feature-1-title': 'Globale Ressourcen',
+                'feature-1-desc': 'Abdeckung der wichtigsten europäischen Märkte, Sammlung qualitativ hochwertiger Lieferantenressourcen',
+                'feature-2-title': 'Mehrsprachige Unterstützung',
+                'feature-2-desc': 'Unterstützung für Chinesisch, Englisch, Ungarisch und Deutsch',
+                'feature-3-title': 'Schnelle Beschaffung',
+                'feature-3-desc': 'Direkter Zugriff auf Zielwebsites mit einem Klick, Verbesserung der Beschaffungseffizienz',
+                'feature-4-title': 'Kontinuierliche Updates',
+                'feature-4-desc': 'Regelmäßige Hinzufügung neuer Beschaffungskanäle und Plattformen',
+                'footer': '© 2026 Beschaffungswebsite-Integrationsplattform | Unterstützung der globalen Beschaffung'
+            }
+        };
+
+        // 地区筛选功能
+        function filterByRegion(region) {
+            // 更新按钮状态
+            document.querySelectorAll('.region-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-region') === region) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // 显示/隐藏卡片
+            const cards = document.querySelectorAll('.source-card');
+            cards.forEach(card => {
+                if (region === 'all' || card.getAttribute('data-region') === region) {
+                    card.style.display = 'block';
+                    // 重新触发动画
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 50);
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // 保存筛选偏好
+            localStorage.setItem('preferredRegion', region);
+        }
+
+        // 语言切换功能
+        function switchLanguage(langCode) {
+            // 更新按钮状态
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang-code') === langCode) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // 更新页面内容
+            const texts = translations[langCode];
+            document.querySelectorAll('[data-lang]').forEach(element => {
+                const key = element.getAttribute('data-lang');
+                if (texts[key]) {
+                    element.textContent = texts[key];
+                }
+            });
+
+            // 保存语言偏好
+            localStorage.setItem('preferredLanguage', langCode);
+
+            // 更新HTML lang属性
+            const langMap = {
+                'zh': 'zh-CN',
+                'en': 'en',
+                'hu': 'hu',
+                'de': 'de'
+            };
+            document.documentElement.lang = langMap[langCode];
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 绑定地区筛选按钮事件
+            document.querySelectorAll('.region-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const region = this.getAttribute('data-region');
+                    filterByRegion(region);
+                });
+            });
+
+            // 绑定语言切换按钮事件
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const langCode = this.getAttribute('data-lang-code');
+                    switchLanguage(langCode);
+                });
+            });
+
+            // 恢复用户语言偏好
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang && translations[savedLang]) {
+                switchLanguage(savedLang);
+            }
+
+            // 恢复地区筛选偏好
+            const savedRegion = localStorage.getItem('preferredRegion');
+            if (savedRegion) {
+                filterByRegion(savedRegion);
+            }
+
+            // 添加渐入动画
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+
+            // 初始动画触发
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach((el, index) => {
+                    setTimeout(() => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+            }, 100);
+        });
+    </script>
+</body>
+</html>
