@@ -22,6 +22,9 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* Header */
@@ -158,6 +161,51 @@
             transform: scale(1.08);
         }
 
+        /* Shopping Filter Buttons */
+        .shopping-filter {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 10px 0;
+        }
+
+        .shopping-filter-btn {
+            padding: 12px 24px;
+            border: 2px solid rgba(0, 91, 172, 0.8);
+            background: rgba(255, 255, 255, 0.95);
+            color: #005BAC;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 91, 172, 0.15);
+        }
+
+        .shopping-filter-btn:hover {
+            background: #005BAC;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 91, 172, 0.3);
+        }
+
+        .shopping-filter-btn.active {
+            background: linear-gradient(135deg, #005BAC 0%, #003d7a 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 91, 172, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* Shopping Category Sections */
+        .shopping-category {
+            transition: all 0.3s ease;
+        }
+
+        .shopping-category.hidden {
+            display: none;
+        }
+
         /* Cards Grid */
         .cards-grid {
             display: grid;
@@ -261,6 +309,8 @@
             padding: 30px;
             text-align: center;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            margin-top: auto;
         }
 
         footer p {
@@ -361,6 +411,182 @@
         .fade-in {
             animation: fadeIn 0.6s ease forwards;
         }
+
+        /* Main Layout with Sidebar */
+        .main-layout {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 220px;
+            flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-menu-item {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu-btn {
+            width: 100%;
+            padding: 14px 18px;
+            border: none;
+            background: transparent;
+            color: #333;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: left;
+        }
+
+        .sidebar-menu-btn:hover {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8edff 100%);
+            color: #005BAC;
+            transform: translateX(5px);
+        }
+
+        .sidebar-menu-btn.active {
+            background: linear-gradient(135deg, #005BAC 0%, #003d7a 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 91, 172, 0.3);
+        }
+
+        .sidebar-menu-btn .icon {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+            padding: 20px 30px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title .icon {
+            font-size: 24px;
+        }
+
+        /* Shopping Platforms Grid */
+        .shopping-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        /* Platform Category Label */
+        .platform-category {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        /* Platform Card Variation */
+        .platform-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-5px);
+            border-color: #005BAC;
+            box-shadow: 0 12px 40px rgba(0, 91, 172, 0.2);
+        }
+
+        /* Platform Icon */
+        .platform-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            flex-shrink: 0;
+        }
+
+        /* Hidden section */
+        .section-hidden {
+            display: none;
+        }
+
+        /* Responsive Sidebar */
+        @media (max-width: 768px) {
+            .main-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: static;
+            }
+
+            .sidebar-menu {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .sidebar-menu-item {
+                margin-bottom: 0;
+                flex: 1;
+                min-width: 140px;
+            }
+
+            .sidebar-menu-btn {
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -380,22 +606,46 @@
             </div>
         </header>
 
-        <!-- Hero Section -->
-        <section class="hero fade-in">
-            <h1 data-lang="hero-title">一站式寻源网站信息整合平台</h1>
-            <p data-lang="hero-desc">汇聚全球优质供应商资源，帮助您快速找到合适的合作伙伴。支持多国语言，覆盖全球主要市场。</p>
-        </section>
+        <!-- Main Layout with Sidebar -->
+        <div class="main-layout">
+            <!-- Sidebar Menu -->
+            <aside class="sidebar fade-in">
+                <ul class="sidebar-menu">
+                    <li class="sidebar-menu-item">
+                        <button class="sidebar-menu-btn active" data-section="sourcing">
+                            <span class="icon">🔍</span>
+                            <span data-lang="menu-sourcing">寻源平台</span>
+                        </button>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <button class="sidebar-menu-btn" data-section="shopping">
+                            <span class="icon">🛒</span>
+                            <span data-lang="menu-shopping">常用网购平台</span>
+                        </button>
+                    </li>
+                </ul>
+            </aside>
 
-        <!-- Region Filter -->
-        <div class="region-filter fade-in">
-            <button class="region-btn active" data-region="all" data-lang="region-all">全部</button>
-            <button class="region-btn" data-region="china" data-lang="region-china">中国</button>
-            <button class="region-btn" data-region="europe" data-lang="region-europe">欧洲</button>
-            <button class="region-btn" data-region="uk" data-lang="region-uk">英国</button>
-        </div>
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Sourcing Platforms Section -->
+                <div id="sourcing-section">
+                    <!-- Hero Section -->
+                    <section class="hero fade-in">
+                        <h1 data-lang="hero-title">一站式寻源网站信息整合平台</h1>
+                        <p data-lang="hero-desc">汇聚全球优质供应商资源，帮助您快速找到合适的合作伙伴。支持多国语言，覆盖全球主要市场。</p>
+                    </section>
 
-        <!-- Source Websites Cards -->
-        <div class="cards-grid">
+                    <!-- Region Filter -->
+                    <div class="region-filter fade-in">
+                        <button class="region-btn active" data-region="all" data-lang="region-all">全部</button>
+                        <button class="region-btn" data-region="china" data-lang="region-china">中国</button>
+                        <button class="region-btn" data-region="europe" data-lang="region-europe">欧洲</button>
+                        <button class="region-btn" data-region="uk" data-lang="region-uk">英国</button>
+                    </div>
+
+                    <!-- Source Websites Cards -->
+                    <div class="cards-grid">
             <!-- China Card - 1688 -->
             <div class="source-card fade-in" data-region="china">
                 <div class="card-header">
@@ -827,27 +1077,6 @@
                 </div>
                 <p class="card-description" data-lang="desc-hu-cegb2b">匈牙利B2B企业目录，汇集匈牙利本地企业和制造商信息。</p>
                 <a href="https://www.cegb2b.hu/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
-            </div>
-
-            <!-- Hungary - FirmaKatalogus -->
-            <div class="source-card fade-in" data-region="europe">
-                <div class="card-header">
-                    <div class="country-flag">
-                        <svg viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg">
-                            <g fill-rule="evenodd">
-                                <path fill="#fff" d="M640 480H0V0h640z"/>
-                                <path fill="#388d00" d="M640 480H0V320h640z"/>
-                                <path fill="#d43516" d="M640 160H0V0h640z"/>
-                            </g>
-                        </svg>
-                    </div>
-                    <div>
-                        <div class="card-title">FirmaKatalogus</div>
-                        <div class="card-country" data-lang="country-hu">匈牙利</div>
-                    </div>
-                </div>
-                <p class="card-description" data-lang="desc-hu-fk">匈牙利企业目录平台，提供全面的匈牙利企业信息和联系方式。</p>
-                <a href="https://www.firmakatalogus.hu/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
             </div>
 
             <!-- Hungary - Export.hu -->
@@ -1776,9 +2005,9 @@
                 <p class="card-description" data-lang="desc-eu-amazon">工业耗材/MRO分销。</p>
                 <a href="https://www.amazon.de/business/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
             </div>
-        </div>
+                </div>
 
-        <!-- Features Section -->
+                <!-- Features Section -->
         <section class="features fade-in">
             <h2 data-lang="features-title">平台优势</h2>
             <div class="features-grid">
@@ -1804,6 +2033,389 @@
                 </div>
             </div>
         </section>
+
+                </div>
+
+                <!-- Shopping Platforms Section -->
+                <div id="shopping-section" class="section-hidden">
+                    <!-- Shopping Hero -->
+                    <section class="hero fade-in">
+                        <h1 data-lang="shopping-title">常用网购平台</h1>
+                        <p data-lang="shopping-desc">汇集欧洲地区常用在线购物和采购平台，方便日常采购需求。</p>
+                    </section>
+
+                    <!-- Shopping Category Filter -->
+                    <div class="shopping-filter fade-in" style="text-align: center; margin-bottom: 30px;">
+                        <button class="shopping-filter-btn active" data-category="all" data-lang="filter-all">全部</button>
+                        <button class="shopping-filter-btn" data-category="hungary" data-lang="filter-hungary">匈牙利</button>
+                        <button class="shopping-filter-btn" data-category="germany" data-lang="filter-germany">德国</button>
+                        <button class="shopping-filter-btn" data-category="industrial" data-lang="filter-industrial">工业品</button>
+                        <button class="shopping-filter-btn" data-category="chemical" data-lang="filter-chemical">化学品</button>
+                    </div>
+
+                    <!-- Hungary Platforms -->
+                    <div class="shopping-category" data-category="hungary">
+                        <h2 class="section-title fade-in">
+                            <span class="icon">🇭🇺</span>
+                            <span data-lang="category-hungary">匈牙利平台</span>
+                        </h2>
+                        <div class="shopping-grid">
+                        <!-- eMAG.hu -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">🛍️</div>
+                                <div>
+                                    <div class="card-title">eMAG.hu</div>
+                                    <div class="platform-category" data-lang="cat-comprehensive">综合平台</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-emag">匈牙利最大的综合电商平台，提供电子产品、家居用品、服装等全品类商品。</p>
+                            <a href="https://www.emag.hu/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- Alza.hu -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">💻</div>
+                                <div>
+                                    <div class="card-title">Alza.hu</div>
+                                    <div class="platform-category" data-lang="cat-electronics">3C/电子</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-alza">专注电子产品、计算机和配件的匈牙利领先电商平台。</p>
+                            <a href="https://www.alza.hu/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- Árukereső.hu -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">🔎</div>
+                                <div>
+                                    <div class="card-title">Árukereső.hu</div>
+                                    <div class="platform-category" data-lang="cat-price">价格比较</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-arukereso">匈牙利最大的价格比较网站，帮助找到最优惠的价格。</p>
+                            <a href="https://www.arukereso.hu/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- MediaMarkt.hu -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">📺</div>
+                                <div>
+                                    <div class="card-title">MediaMarkt.hu</div>
+                                    <div class="platform-category" data-lang="cat-appliance">家电/3C</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-mediamarkt">欧洲知名家电和电子产品零售连锁在匈牙利的网上商城。</p>
+                            <a href="https://www.mediamarkt.hu/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- Manutan.hu -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">🔧</div>
+                                <div>
+                                    <div class="card-title">Manutan.hu</div>
+                                    <div class="platform-category" data-lang="cat-mro">MRO</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-manutan">专业MRO和工业用品采购平台，提供工具、设备和办公用品。</p>
+                            <a href="https://www.manutan.hu/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- Würth.hu -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">⚙️</div>
+                                <div>
+                                    <div class="card-title">Würth.hu</div>
+                                    <div class="platform-category" data-lang="cat-industrial">工业工具</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-wurth-hu">伍尔特匈牙利官网，专业工业紧固件、工具和MRO产品。</p>
+                            <a href="https://eshop.wurth.hu/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- Kaiser Kraft.hu -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">🏭</div>
+                                <div>
+                                    <div class="card-title">Kaiser Kraft.hu</div>
+                                    <div class="platform-category" data-lang="cat-industrial">工业工具</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-kaiserkraft">匈牙利领先的工业设备和仓储用品供应商，提供工作台、货架、物流设备。</p>
+                            <a href="https://www.kaiserkraft.hu/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- Müpro.hu -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">🔩</div>
+                                <div>
+                                    <div class="card-title">Müpro.hu</div>
+                                    <div class="platform-category" data-lang="cat-industrial">工业工具</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-muepro">专业工业装配和连接技术供应商，提供锚栓、支架、管道系统解决方案。</p>
+                            <a href="https://www.muepro.hu/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+                    </div>
+                    </div>
+
+                    <!-- Germany Platforms -->
+                    <div class="shopping-category" data-category="germany">
+                        <h2 class="section-title fade-in">
+                            <span class="icon">🇩🇪</span>
+                            <span data-lang="category-germany">德国平台</span>
+                        </h2>
+                        <div class="shopping-grid">
+                        <!-- Amazon.de -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">📦</div>
+                                <div>
+                                    <div class="card-title">Amazon.de</div>
+                                    <div class="platform-category" data-lang="cat-comprehensive">综合平台</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-amazon-de">德国最大的在线零售平台，提供全品类商品。</p>
+                            <a href="https://www.amazon.de/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- Otto.de -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">🏠</div>
+                                <div>
+                                    <div class="card-title">Otto.de</div>
+                                    <div class="platform-category" data-lang="cat-home">家居/时尚</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-otto">德国领先的家居和时尚电商平台。</p>
+                            <a href="https://www.otto.de/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- Conrad.de -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">🔌</div>
+                                <div>
+                                    <div class="card-title">Conrad.de</div>
+                                    <div class="platform-category" data-lang="cat-electronics">电子/工具</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-conrad">专注电子产品和工具的德国电商平台。</p>
+                            <a href="https://www.conrad.de/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- Würth.de -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">🛠️</div>
+                                <div>
+                                    <div class="card-title">Würth.de</div>
+                                    <div class="platform-category" data-lang="cat-industrial">工业工具</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-wurth-de">伍尔特德国官网，工业紧固件、工具和MRO产品领先供应商。</p>
+                            <a href="https://www.wuerth.de/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+                    </div>
+                    </div>
+
+                    <!-- European Industrial B2B -->
+                    <div class="shopping-category" data-category="industrial">
+                        <h2 class="section-title fade-in">
+                            <span class="icon">🏭</span>
+                            <span data-lang="category-eu-b2b">欧洲工业B2B</span>
+                        </h2>
+                        <div class="shopping-grid">
+                        <!-- IndustryStock -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">🏭</div>
+                                <div>
+                                    <div class="card-title">IndustryStock</div>
+                                    <div class="platform-category" data-lang="cat-b2b">B2B平台</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-industrystock">欧洲领先的工业B2B平台，汇集工业产品和服务供应商。</p>
+                            <a href="https://www.industrystock.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- Visable -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">🌐</div>
+                                <div>
+                                    <div class="card-title">Visable (WLW+Europages)</div>
+                                    <div class="platform-category" data-lang="cat-b2b">B2B平台</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-visable">整合WLW和Europages的欧洲B2B平台，覆盖多国家多行业。</p>
+                            <a href="https://www.visable.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- Garlock Europe -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">🔩</div>
+                                <div>
+                                    <div class="card-title">Garlock Europe</div>
+                                    <div class="platform-category" data-lang="cat-sealing">密封件</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-garlock">专业密封件和工业产品供应商。</p>
+                            <a href="https://www.garlockeurope.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- Zentrada -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">📋</div>
+                                <div>
+                                    <div class="card-title">Zentrada</div>
+                                    <div class="platform-category" data-lang="cat-wholesale">批发平台</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-zentrada">欧洲B2B批发平台，连接零售商和批发商。</p>
+                            <a href="https://www.zentrada.com/eu/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+                    </div>
+                    </div>
+
+                    <!-- Chemical Platforms -->
+                    <div class="shopping-category" data-category="chemical">
+                        <h2 class="section-title fade-in">
+                            <span class="icon">🧪</span>
+                            <span data-lang="category-chemical">化学采购平台</span>
+                        </h2>
+                        <div class="shopping-grid">
+                        <!-- CheMondis -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">⚗️</div>
+                                <div>
+                                    <div class="card-title">CheMondis</div>
+                                    <div class="platform-category" data-lang="cat-chemical">化学B2B</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-chemondis">欧洲领先的化学品B2B电商平台，汇集化学品供应商。</p>
+                            <a href="https://www.chemondis.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- LOLAB -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">🧫</div>
+                                <div>
+                                    <div class="card-title">LOLAB</div>
+                                    <div class="platform-category" data-lang="cat-chemical">化学B2B</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-lolab">德国化学品和实验室用品电商平台。</p>
+                            <a href="https://shop-lolab.de/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- BTC Europe -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">🧴</div>
+                                <div>
+                                    <div class="card-title">BTC Europe ChemShop</div>
+                                    <div class="platform-category" data-lang="cat-chemical">化学B2B</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-btc">欧洲化学品分销平台，隶属于巴斯夫集团。</p>
+                            <a href="https://www.btc-europe.com/de/online-shop-1" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- OQEMA -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">🧪</div>
+                                <div>
+                                    <div class="card-title">OQEMA</div>
+                                    <div class="platform-category" data-lang="cat-chemical">化学B2B</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-oqema">中欧领先的化学品分销公司，总部位于捷克。</p>
+                            <a href="https://www.oqema.cz/en/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- Stokkee -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">📦</div>
+                                <div>
+                                    <div class="card-title">Stokkee</div>
+                                    <div class="platform-category" data-lang="cat-chemical">化学B2B</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-stokkee">化学品电商平台，提供实验室和工业化学品。</p>
+                            <a href="https://www.stokkee.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- Bodo Möller Chemie -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">⚗️</div>
+                                <div>
+                                    <div class="card-title">Bodo Möller Chemie Hungary</div>
+                                    <div class="platform-category" data-lang="cat-chemical">化学B2B</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-bodo">专业化学品和粘合剂供应商，匈牙利分公司。</p>
+                            <a href="https://bm-chemie.com/regions/hungary/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- C.H. Erbslöh -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">🧬</div>
+                                <div>
+                                    <div class="card-title">C.H. Erbslöh Hungária</div>
+                                    <div class="platform-category" data-lang="cat-chemical">化学B2B</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-erbsloeh">专业化学品分销公司，在匈牙利设有分支机构。</p>
+                            <a href="https://www.cherbsloeh.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- Merck (Sigma-Aldrich) -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">⚗️</div>
+                                <div>
+                                    <div class="card-title">Merck (Sigma-Aldrich)</div>
+                                    <div class="platform-category" data-lang="cat-chemical">化学B2B</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-merck">全球领先的化学品和实验室材料供应商，提供高质量化学试剂、生物化学品和实验室解决方案。</p>
+                            <a href="https://www.sigmaaldrich.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+
+                        <!-- Hexagon Manufacturing Intelligence -->
+                        <div class="platform-card fade-in">
+                            <div class="card-header">
+                                <div class="platform-icon">📐</div>
+                                <div>
+                                    <div class="card-title">Hexagon MI</div>
+                                    <div class="platform-category" data-lang="cat-measurement">测量/检测</div>
+                                </div>
+                            </div>
+                            <p class="card-description" data-lang="desc-hexagon">全球领先的测量技术和制造智能解决方案供应商，提供精密测量设备和软件。</p>
+                            <a href="https://shop.hexagonmi.com/" target="_blank" class="card-link" data-lang="visit-btn">访问网站</a>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Footer -->
         <footer class="fade-in">
@@ -1854,7 +2466,6 @@
                 'desc-cz-firmy': '捷克企业目录平台，提供捷克本地企业的详细信息和商业搜索。',
                 'desc-hu': '欧洲领先的B2B采购平台，汇集超过260万家欧洲供应商，支持多语言搜索和产品类别浏览。',
                 'desc-hu-cegb2b': '匈牙利B2B企业目录，汇集匈牙利本地企业和制造商信息。',
-                'desc-hu-fk': '匈牙利企业目录平台，提供全面的匈牙利企业信息和联系方式。',
                 'desc-eu-kompass': '全球知名的B2B企业目录平台，覆盖70+国家，汇集超过1100万家企业信息。',
                 'desc-eu-di': '专注工业领域的B2B平台，汇集全球工业产品制造商和供应商。',
                 'desc-hu-export': '匈牙利工商会官方出口平台，工业/MRO询盘多。',
@@ -1909,6 +2520,65 @@
                 'region-china': '中国',
                 'region-uk': '英国',
                 'region-europe': '欧洲',
+                // Menu items
+                'menu-sourcing': '寻源平台',
+                'menu-shopping': '常用网购平台',
+                // Shopping platforms title
+                'shopping-title': '常用网购平台',
+                'shopping-desc': '汇集欧洲地区常用在线购物和采购平台，方便日常采购需求。',
+                // Platform categories
+                'category-hungary': '匈牙利平台',
+                'category-germany': '德国平台',
+                'category-eu-b2b': '欧洲工业B2B',
+                'category-chemical': '化学采购平台',
+                // Platform types
+                'cat-comprehensive': '综合平台',
+                'cat-electronics': '3C/电子',
+                'cat-price': '价格比较',
+                'cat-appliance': '家电/3C',
+                'cat-mro': 'MRO',
+                'cat-industrial': '工业工具',
+                'cat-home': '家居/时尚',
+                'cat-b2b': 'B2B平台',
+                'cat-sealing': '密封件',
+                'cat-wholesale': '批发平台',
+                'cat-chemical': '化学B2B',
+                'cat-measurement': '测量/检测',
+                // Shopping platform descriptions - Hungary
+                'desc-emag': '匈牙利最大的综合电商平台，提供电子产品、家居用品、服装等全品类商品。',
+                'desc-alza': '专注电子产品、计算机和配件的匈牙利领先电商平台。',
+                'desc-arukereso': '匈牙利最大的价格比较网站，帮助找到最优惠的价格。',
+                'desc-mediamarkt': '欧洲知名家电和电子产品零售连锁在匈牙利的网上商城。',
+                'desc-manutan': '专业MRO和工业用品采购平台，提供工具、设备和办公用品。',
+                'desc-wurth-hu': '伍尔特匈牙利官网，专业工业紧固件、工具和MRO产品。',
+                'desc-kaiserkraft': '匈牙利领先的工业设备和仓储用品供应商，提供工作台、货架、物流设备。',
+                'desc-muepro': '专业工业装配和连接技术供应商，提供锚栓、支架、管道系统解决方案。',
+                // Shopping Filter buttons
+                'filter-all': '全部',
+                'filter-hungary': '匈牙利',
+                'filter-germany': '德国',
+                'filter-industrial': '工业品',
+                'filter-chemical': '化学品',
+                // Shopping platform descriptions - Germany
+                'desc-amazon-de': '德国最大的在线零售平台，提供全品类商品。',
+                'desc-otto': '德国领先的家居和时尚电商平台。',
+                'desc-conrad': '专注电子产品和工具的德国电商平台。',
+                'desc-wurth-de': '伍尔特德国官网，工业紧固件、工具和MRO产品领先供应商。',
+                // Shopping platform descriptions - EU B2B
+                'desc-industrystock': '欧洲领先的工业B2B平台，汇集工业产品和服务供应商。',
+                'desc-visable': '整合WLW和Europages的欧洲B2B平台，覆盖多国家多行业。',
+                'desc-garlock': '专业密封件和工业产品供应商。',
+                'desc-zentrada': '欧洲B2B批发平台，连接零售商和批发商。',
+                // Shopping platform descriptions - Chemical
+                'desc-chemondis': '欧洲领先的化学品B2B电商平台，汇集化学品供应商。',
+                'desc-lolab': '德国化学品和实验室用品电商平台。',
+                'desc-btc': '欧洲化学品分销平台，隶属于巴斯夫集团。',
+                'desc-oqema': '中欧领先的化学品分销公司，总部位于捷克。',
+                'desc-stokkee': '化学品电商平台，提供实验室和工业化学品。',
+                'desc-bodo': '专业化学品和粘合剂供应商，匈牙利分公司。',
+                'desc-erbsloeh': '专业化学品分销公司，在匈牙利设有分支机构。',
+                'desc-merck': '全球领先的化学品和实验室耗材供应商，提供高纯度化学品和科研材料。',
+                'desc-hexagon': '海克斯康制造智能官方商城，专业测量设备和检测解决方案。',
                 'region-austria': '奥地利',
                 'region-slovakia': '斯洛伐克',
                 'region-romania': '罗马尼亚',
@@ -1966,7 +2636,6 @@
                 'desc-cz-firmy': 'Czech enterprise directory platform, providing detailed information and commercial search for local Czech businesses.',
                 'desc-hu': 'Europe\'s leading B2B sourcing platform, gathering over 2.6 million European suppliers, supporting multi-language search and product category browsing.',
                 'desc-hu-cegb2b': 'Hungarian B2B enterprise directory, gathering local Hungarian enterprises and manufacturer information.',
-                'desc-hu-fk': 'Hungarian enterprise directory platform, providing comprehensive Hungarian enterprise information and contact details.',
                 'desc-at-wlw': 'Austrian industrial platform, same system as German WLW, strong in MRO.',
                 'desc-at-ep': 'Commonly used platform for industrial procurement in Austria.',
                 'desc-at-kompass': 'Precise targeting of industrial MRO buyers.',
@@ -2021,6 +2690,65 @@
                 'region-china': 'China',
                 'region-uk': 'UK',
                 'region-europe': 'Europe',
+                // Menu items
+                'menu-sourcing': 'Sourcing Platform',
+                'menu-shopping': 'Online Shopping',
+                // Shopping platforms title
+                'shopping-title': 'Common Online Shopping Platforms',
+                'shopping-desc': 'Collection of commonly used online shopping and procurement platforms in Europe for daily purchasing needs.',
+                // Platform categories
+                'category-hungary': 'Hungary Platforms',
+                'category-germany': 'Germany Platforms',
+                'category-eu-b2b': 'European Industrial B2B',
+                'category-chemical': 'Chemical Procurement',
+                // Platform types
+                'cat-comprehensive': 'Comprehensive',
+                'cat-electronics': '3C/Electronics',
+                'cat-price': 'Price Comparison',
+                'cat-appliance': 'Appliances/3C',
+                'cat-mro': 'MRO',
+                'cat-industrial': 'Industrial Tools',
+                'cat-home': 'Home/Fashion',
+                'cat-b2b': 'B2B Platform',
+                'cat-sealing': 'Sealing',
+                'cat-wholesale': 'Wholesale',
+                'cat-chemical': 'Chemical B2B',
+                'cat-measurement': 'Measurement/Inspection',
+                // Shopping platform descriptions - Hungary
+                'desc-emag': 'Hungary\'s largest comprehensive e-commerce platform, offering full range of products including electronics, home goods, and clothing.',
+                'desc-alza': 'Leading Hungarian e-commerce platform focused on electronics, computers, and accessories.',
+                'desc-arukereso': 'Hungary\'s largest price comparison website, helping find the best deals.',
+                'desc-mediamarkt': 'Online store of Europe\'s renowned home appliance and electronics retail chain in Hungary.',
+                'desc-manutan': 'Professional MRO and industrial supplies procurement platform, offering tools, equipment, and office supplies.',
+                'desc-wurth-hu': 'Würth Hungary official website, professional industrial fasteners, tools, and MRO products.',
+                'desc-kaiserkraft': 'Hungary\'s leading industrial equipment and warehousing supplies provider, offering workbenches, shelving, and logistics equipment.',
+                'desc-muepro': 'Professional industrial assembly and connection technology supplier, providing anchors, supports, and piping system solutions.',
+                // Shopping Filter buttons
+                'filter-all': 'All',
+                'filter-hungary': 'Hungary',
+                'filter-germany': 'Germany',
+                'filter-industrial': 'Industrial',
+                'filter-chemical': 'Chemical',
+                // Shopping platform descriptions - Germany
+                'desc-amazon-de': 'Germany\'s largest online retail platform, offering full range of products.',
+                'desc-otto': 'Leading German home and fashion e-commerce platform.',
+                'desc-conrad': 'German e-commerce platform focused on electronics and tools.',
+                'desc-wurth-de': 'Würth Germany official website, leading supplier of industrial fasteners, tools, and MRO products.',
+                // Shopping platform descriptions - EU B2B
+                'desc-industrystock': 'Europe\'s leading industrial B2B platform, gathering industrial product and service suppliers.',
+                'desc-visable': 'European B2B platform integrating WLW and Europages, covering multiple countries and industries.',
+                'desc-garlock': 'Professional sealing and industrial product supplier.',
+                'desc-zentrada': 'European B2B wholesale platform connecting retailers and wholesalers.',
+                // Shopping platform descriptions - Chemical
+                'desc-chemondis': 'Europe\'s leading chemical B2B e-commerce platform, gathering chemical suppliers.',
+                'desc-lolab': 'German chemical and laboratory supplies e-commerce platform.',
+                'desc-btc': 'European chemical distribution platform, part of BASF Group.',
+                'desc-oqema': 'Leading Central European chemical distribution company, headquartered in Czech Republic.',
+                'desc-stokkee': 'Chemical e-commerce platform, providing laboratory and industrial chemicals.',
+                'desc-bodo': 'Professional chemical and adhesive supplier, Hungary branch.',
+                'desc-erbsloeh': 'Professional chemical distribution company with branches in Hungary.',
+                'desc-merck': 'Global leader in chemicals and laboratory supplies, offering high-purity chemicals and research materials.',
+                'desc-hexagon': 'Hexagon Manufacturing Intelligence official store, professional measurement equipment and inspection solutions.',
                 'region-austria': 'Austria',
                 'region-slovakia': 'Slovakia',
                 'region-romania': 'Romania',
@@ -2078,7 +2806,6 @@
                 'desc-cz-firmy': 'Cseh vállalati könyvtár platform, részletes információkat és kereskedelmi keresést nyújtva a helyi cseh vállalkozások számára.',
                 'desc-hu': 'Európa vezető B2B beszerzési platformja, több mint 2,6 millió európai beszállítót gyűjtve, többnyelvű keresés és termékkategória böngészés támogatásával.',
                 'desc-hu-cegb2b': 'Magyar B2B vállalati könyvtár, helyi magyar vállalatokat és gyártói információkat gyűjtve.',
-                'desc-hu-fk': 'Magyar vállalati könyvtár platform, átfogó magyar vállalati információkat és elérhetőségeket nyújtva.',
                 'desc-at-wlw': 'Osztrák ipari platform, ugyanaz a rendszer, mint a német WLW, erős MRO.',
                 'desc-at-ep': 'Ausztriában gyakran használt ipari beszerzési platform.',
                 'desc-at-kompass': 'Pontos ipari MRO vevők megcélzása.',
@@ -2133,6 +2860,65 @@
                 'region-china': 'Kína',
                 'region-uk': 'Egyesült Királyság',
                 'region-europe': 'Európa',
+                // Menu items
+                'menu-sourcing': 'Beszerzési Platform',
+                'menu-shopping': 'Online Vásárlás',
+                // Shopping platforms title
+                'shopping-title': 'Gyakran Használt Online Vásárlási Platformok',
+                'shopping-desc': 'Európában gyakran használt online vásárlási és beszerzési platformok gyűjteménye a mindennapi vásárlási igényekhez.',
+                // Platform categories
+                'category-hungary': 'Magyar Platformok',
+                'category-germany': 'Német Platformok',
+                'category-eu-b2b': 'Európai Ipari B2B',
+                'category-chemical': 'Vegyi Beszerzés',
+                // Platform types
+                'cat-comprehensive': 'Átfogó',
+                'cat-electronics': '3C/Elektronika',
+                'cat-price': 'Árösszehasonlítás',
+                'cat-appliance': 'Háztartási Gépek/3C',
+                'cat-mro': 'MRO',
+                'cat-industrial': 'Ipari Szerszámok',
+                'cat-home': 'Otthon/Divat',
+                'cat-b2b': 'B2B Platform',
+                'cat-sealing': 'Tömítések',
+                'cat-wholesale': 'Nagykereskedelem',
+                'cat-chemical': 'Vegyi B2B',
+                'cat-measurement': 'Mérés/Ellenőrzés',
+                // Shopping platform descriptions - Hungary
+                'desc-emag': 'Magyarország legnagyobb átfogó e-kereskedelmi platformja, amely elektronikai cikkeket, háztartási termékeket és ruházatot kínál teljes kategóriában.',
+                'desc-alza': 'Magyarország vezető e-kereskedelmi platformja, amely elektronikára, számítógépekre és kiegészítőkre összpontosít.',
+                'desc-arukereso': 'Magyarország legnagyobb árösszehasonlító weboldala, amely segít megtalálni a legjobb ajánlatokat.',
+                'desc-mediamarkt': 'Európa ismert háztartási gépek és elektronikai kiskereskedelmi láncának online áruháza Magyarországon.',
+                'desc-manutan': 'Professzionális MRO és ipari ellátási beszerzési platform, amely szerszámokat, berendezéseket és irodaszereket kínál.',
+                'desc-wurth-hu': 'Würth Magyarország hivatalos weboldala, professzionális ipari rögzítőelemek, szerszámok és MRO termékek.',
+                'desc-kaiserkraft': 'Magyarország vezető ipari berendezési és raktározási ellátási szállítója, munkaasztalokat, polcokat és logisztikai berendezéseket kínál.',
+                'desc-muepro': 'Professzionális ipari szerelési és csatlakozási technológia szállítója, horgonyokat, támasztékokat és csőrendszer-megoldásokat kínál.',
+                // Shopping Filter buttons
+                'filter-all': 'Mind',
+                'filter-hungary': 'Magyarország',
+                'filter-germany': 'Németország',
+                'filter-industrial': 'Ipari',
+                'filter-chemical': 'Vegyi',
+                // Shopping platform descriptions - Germany
+                'desc-amazon-de': 'Németország legnagyobb online kiskereskedelmi platformja, teljes termékválasztékot kínálva.',
+                'desc-otto': 'Németország vezető otthoni és divat e-kereskedelmi platformja.',
+                'desc-conrad': 'Német e-kereskedelmi platform, amely elektronikára és szerszámokra összpontosít.',
+                'desc-wurth-de': 'Würth Németország hivatalos weboldala, az ipari rögzítőelemek, szerszámok és MRO termékek vezető beszállítója.',
+                // Shopping platform descriptions - EU B2B
+                'desc-industrystock': 'Európa vezető ipari B2B platformja, amely ipari termék- és szolgáltatás-beszállítókat gyűjt össze.',
+                'desc-visable': 'Európai B2B platform, amely integrálja a WLW-t és az Europages-t, több országot és iparágat lefedve.',
+                'desc-garlock': 'Professzionális tömítés és ipari termék szállító.',
+                'desc-zentrada': 'Európai B2B nagykereskedelmi platform, amely összekapcsolja a kiskereskedőket és nagykereskedőket.',
+                // Shopping platform descriptions - Chemical
+                'desc-chemondis': 'Európa vezető vegyi B2B e-kereskedelmi platformja, amely vegyi beszállítókat gyűjt össze.',
+                'desc-lolab': 'Német vegyi és laboratóriumi ellátási e-kereskedelmi platform.',
+                'desc-btc': 'Európai vegyi disztribúciós platform, a BASF Csoport tagja.',
+                'desc-oqema': 'Közép-Európa vezető vegyi disztribúciós vállalata, székhelye Csehországban.',
+                'desc-stokkee': 'Vegyi e-kereskedelmi platform, amely laboratóriumi és ipari vegyi anyagokat kínál.',
+                'desc-bodo': 'Professzionális vegyi és ragasztó szállító, Magyarországi fiók.',
+                'desc-erbsloeh': 'Professzionális vegyi disztribúciós vállalat, amelynek fiókjai vannak Magyarországon.',
+                'desc-merck': 'Világszerte vezető vegyi anyagok és laboratóriumi kellékek szállítója, nagy tisztaságú vegyi anyagokat és kutatási anyagokat kínál.',
+                'desc-hexagon': 'Hexagon Manufacturing Intelligence hivatalos boltja, professzionális mérési berendezések és ellenőrzési megoldások.',
                 'region-austria': 'Ausztria',
                 'region-slovakia': 'Szlovákia',
                 'region-romania': 'Románia',
@@ -2190,7 +2976,6 @@
                 'desc-cz-firmy': 'Tschechische Unternehmensverzeichnis-Plattform, die detaillierte Informationen und kommerzielle Suche für lokale tschechische Unternehmen bietet.',
                 'desc-hu': 'Europas führende B2B-Beschaffungsplattform, die über 2,6 Millionen europäische Lieferanten sammelt, Unterstützung mehrsprachiger Suche und Produktkategorie-Durchsuchen.',
                 'desc-hu-cegb2b': 'Ungarisches B2B-Unternehmensverzeichnis, das lokale ungarische Unternehmen und Herstellerinformationen sammelt.',
-                'desc-hu-fk': 'Ungarische Unternehmensverzeichnis-Plattform, die umfassende ungarische Unternehmensinformationen und Kontaktdaten bietet.',
                 'desc-at-wlw': 'Österreichische Industrieplattform, dasselbe System wie deutsches WLW, stark in MRO.',
                 'desc-at-ep': 'Häufig verwendete Plattform für industrielle Beschaffung in Österreich.',
                 'desc-at-kompass': 'Präzises Targeting industrieller MRO-Käufer.',
@@ -2245,6 +3030,65 @@
                 'region-china': 'China',
                 'region-uk': 'Vereinigtes Königreich',
                 'region-europe': 'Europa',
+                // Menu items
+                'menu-sourcing': 'Beschaffungsplattform',
+                'menu-shopping': 'Online-Shopping',
+                // Shopping platforms title
+                'shopping-title': 'Häufig verwendete Online-Shopping-Plattformen',
+                'shopping-desc': 'Sammlung häufig verwendeter Online-Shopping- und Beschaffungsplattformen in Europa für den täglichen Einkaufsbedarf.',
+                // Platform categories
+                'category-hungary': 'Ungarische Plattformen',
+                'category-germany': 'Deutsche Plattformen',
+                'category-eu-b2b': 'Europäische Industrie B2B',
+                'category-chemical': 'Chemische Beschaffung',
+                // Platform types
+                'cat-comprehensive': 'Umfassend',
+                'cat-electronics': '3C/Elektronik',
+                'cat-price': 'Preisvergleich',
+                'cat-appliance': 'Haushaltsgeräte/3C',
+                'cat-mro': 'MRO',
+                'cat-industrial': 'Industriewerkzeuge',
+                'cat-home': 'Heim/Mode',
+                'cat-b2b': 'B2B-Plattform',
+                'cat-sealing': 'Dichtungen',
+                'cat-wholesale': 'Großhandel',
+                'cat-chemical': 'Chemie B2B',
+                'cat-measurement': 'Messung/Prüfung',
+                // Shopping platform descriptions - Hungary
+                'desc-emag': 'Ungarns größte umfassende E-Commerce-Plattform, die eine vollständige Produktpalette einschließlich Elektronik, Haushaltswaren und Kleidung anbietet.',
+                'desc-alza': 'Führende ungarische E-Commerce-Plattform mit Fokus auf Elektronik, Computer und Zubehör.',
+                'desc-arukereso': 'Ungarns größte Preisvergleichs-Website, die hilft, die besten Angebote zu finden.',
+                'desc-mediamarkt': 'Online-Shop der europäischen Haushaltsgeräte- und Elektronik-Einzelhandelskette in Ungarn.',
+                'desc-manutan': 'Professionelle MRO- und Industriebeschaffungsplattform, die Werkzeuge, Ausrüstung und Bürobedarf anbietet.',
+                'desc-wurth-hu': 'Würth Ungarn offizielle Website, professionelle industrielle Befestigungselemente, Werkzeuge und MRO-Produkte.',
+                'desc-kaiserkraft': 'Ungarns führender Anbieter von Industrieausrüstung und Lagereinrichtungen, bietet Werkbänke, Regale und Logistikausrüstung.',
+                'desc-muepro': 'Professioneller Lieferant für industrielle Montage- und Verbindungstechnik, bietet Anker, Träger und Rohrsystemlösungen.',
+                // Shopping Filter buttons
+                'filter-all': 'Alle',
+                'filter-hungary': 'Ungarn',
+                'filter-germany': 'Deutschland',
+                'filter-industrial': 'Industrie',
+                'filter-chemical': 'Chemie',
+                // Shopping platform descriptions - Germany
+                'desc-amazon-de': 'Deutschlands größte Online-Einzelhandelsplattform, die eine vollständige Produktpalette anbietet.',
+                'desc-otto': 'Deutschlands führende Heim- und Mode-E-Commerce-Plattform.',
+                'desc-conrad': 'Deutsche E-Commerce-Plattform mit Fokus auf Elektronik und Werkzeuge.',
+                'desc-wurth-de': 'Würth Deutschland offizielle Website, führender Lieferant von industriellen Befestigungselementen, Werkzeugen und MRO-Produkten.',
+                // Shopping platform descriptions - EU B2B
+                'desc-industrystock': 'Europas führende industrielle B2B-Plattform, die Industrieprodukt- und Dienstleistungslieferanten sammelt.',
+                'desc-visable': 'Europäische B2B-Plattform, die WLW und Europages integriert, mehrere Länder und Branchen abdeckend.',
+                'desc-garlock': 'Professioneller Lieferant von Dichtungen und Industrieprodukten.',
+                'desc-zentrada': 'Europäische B2B-Großhandelsplattform, die Einzelhändler und Großhändler verbindet.',
+                // Shopping platform descriptions - Chemical
+                'desc-chemondis': 'Europas führende chemische B2B E-Commerce-Plattform, die Chemielieferanten sammelt.',
+                'desc-lolab': 'Deutsche chemische und Laborversorgungs-E-Commerce-Plattform.',
+                'desc-btc': 'Europäische chemische Vertriebsplattform, Teil der BASF-Gruppe.',
+                'desc-oqema': 'Führendes chemisches Vertriebsunternehmen Mitteleuropas, Hauptsitz in Tschechien.',
+                'desc-stokkee': 'Chemische E-Commerce-Plattform, die Labor- und Industriechemikalien anbietet.',
+                'desc-bodo': 'Professioneller Chemie- und Klebstofflieferant, Ungarn-Zweigstelle.',
+                'desc-erbsloeh': 'Professionelles chemisches Vertriebsunternehmen mit Zweigstellen in Ungarn.',
+                'desc-merck': 'Weltweit führender Anbieter von Chemikalien und Laborbedarf, bietet hochreine Chemikalien und Forschungsmaterialien.',
+                'desc-hexagon': 'Hexagon Manufacturing Intelligence offizieller Shop, professionelle Messgeräte und Prüflösungen.',
                 'region-austria': 'Österreich',
                 'region-slovakia': 'Slowakei',
                 'region-romania': 'Rumänien',
@@ -2263,6 +3107,45 @@
                 'footer': '© 2026 Beschaffungswebsite-Integrationsplattform | Unterstützung der globalen Beschaffung'
             }
         };
+
+        // 视图切换功能
+        function switchView(section) {
+            // 更新侧边栏按钮状态
+            document.querySelectorAll('.sidebar-menu-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-section') === section) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // 显示/隐藏对应的section
+            const sourcingSection = document.getElementById('sourcing-section');
+            const shoppingSection = document.getElementById('shopping-section');
+
+            if (section === 'sourcing') {
+                sourcingSection.classList.remove('section-hidden');
+                shoppingSection.classList.add('section-hidden');
+                localStorage.setItem('preferredSection', 'sourcing');
+            } else if (section === 'shopping') {
+                sourcingSection.classList.add('section-hidden');
+                shoppingSection.classList.remove('section-hidden');
+                localStorage.setItem('preferredSection', 'shopping');
+            }
+
+            // 重新触发渐入动画
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach((el, index) => {
+                    if (!el.closest('.section-hidden')) {
+                        el.style.opacity = '0';
+                        el.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            el.style.opacity = '1';
+                            el.style.transform = 'translateY(0)';
+                        }, index * 50);
+                    }
+                });
+            }, 100);
+        }
 
         // 地区筛选功能
         function filterByRegion(region) {
@@ -2293,6 +3176,35 @@
 
             // 保存筛选偏好
             localStorage.setItem('preferredRegion', region);
+        }
+
+        // 购物平台分类筛选功能
+        function filterShoppingByCategory(category) {
+            // 更新按钮状态
+            document.querySelectorAll('.shopping-filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-category') === category) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // 显示/隐藏分类
+            const categories = document.querySelectorAll('.shopping-category');
+            categories.forEach(cat => {
+                if (category === 'all' || cat.getAttribute('data-category') === category) {
+                    cat.style.display = 'block';
+                    // 重新触发动画
+                    cat.style.opacity = '0';
+                    setTimeout(() => {
+                        cat.style.opacity = '1';
+                    }, 50);
+                } else {
+                    cat.style.display = 'none';
+                }
+            });
+
+            // 保存筛选偏好
+            localStorage.setItem('preferredShoppingCategory', category);
         }
 
         // 语言切换功能
@@ -2345,6 +3257,22 @@
                 });
             });
 
+            // 绑定侧边栏菜单按钮事件
+            document.querySelectorAll('.sidebar-menu-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const section = this.getAttribute('data-section');
+                    switchView(section);
+                });
+            });
+
+            // 绑定购物平台分类筛选按钮事件
+            document.querySelectorAll('.shopping-filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    filterShoppingByCategory(category);
+                });
+            });
+
             // 恢复用户语言偏好
             const savedLang = localStorage.getItem('preferredLanguage');
             if (savedLang && translations[savedLang]) {
@@ -2355,6 +3283,18 @@
             const savedRegion = localStorage.getItem('preferredRegion');
             if (savedRegion) {
                 filterByRegion(savedRegion);
+            }
+
+            // 恢复视图偏好
+            const savedSection = localStorage.getItem('preferredSection');
+            if (savedSection) {
+                switchView(savedSection);
+            }
+
+            // 恢复购物平台分类筛选偏好
+            const savedShoppingCategory = localStorage.getItem('preferredShoppingCategory');
+            if (savedShoppingCategory) {
+                filterShoppingByCategory(savedShoppingCategory);
             }
 
             // 添加渐入动画
